@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>台北即時動態路徑 Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQ6h+M6bU5a6M9nQ3Q4b1pB8x0p+3yk=" crossorigin="" />
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: rgba(17, 24, 39, 0.78);
+      --panel-2: rgba(15, 23, 42, 0.92);
+      --line: rgba(148, 163, 184, 0.18);
+      --text: #e5eefb;
+      --muted: #9fb2cc;
+      --accent: #60a5fa;
+      --accent-2: #34d399;
+      --warn: #f59e0b;
+      --danger: #f87171;
+      --chip: rgba(96, 165, 250, 0.12);
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(96,165,250,.18), transparent 34%),
+        radial-gradient(circle at top right, rgba(52,211,153,.12), transparent 28%),
+        linear-gradient(180deg, #09101b 0%, #0b1220 100%);
+      color: var(--text);
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    header {
+      padding: 20px 24px 10px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(8,15,29,.94), rgba(8,15,29,.62));
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .title-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 34px);
+      letter-spacing: .02em;
+    }
+
+    .subtitle {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 950px;
+      line-height: 1.6;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      border-radius: 999px;
+      font-size: 13px;
+      color: #d8e4f4;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 410px 1fr;
+      gap: 18px;
+      padding: 18px;
+      min-height: 0;
+    }
+
+    .sidebar,
+    .stage {
+      min-height: 0;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar .content {
+      padding: 18px;
+      overflow: auto;
+    }
+
+    .section {
+      margin-bottom: 18px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .section h2 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      letter-spacing: .01em;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 10px 0 6px;
+    }
+
+    input, select, button, textarea {
+      width: 100%;
+      font: inherit;
+    }
+
+    input, select, textarea {
+      border: 1px solid rgba(148,163,184,.22);
+      background: rgba(15,23,42,.95);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: rgba(96,165,250,.68);
+      box-shadow: 0 0 0 4px rgba(96,165,250,.12);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .hint {
+      margin-top: 6px;
+      color: #8fa5bf;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 14px;
+      color: #06101e;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .16s ease, filter .16s ease;
+    }
+
+    button:hover { transform: translateY(-1px); filter: brightness(1.02); }
+    button.primary { background: linear-gradient(135deg, #60a5fa, #34d399); }
+    button.ghost {
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border: 1px solid rgba(148,163,184,.2);
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .metric {
+      padding: 12px;
+      border: 1px solid rgba(148,163,184,.18);
+      border-radius: 16px;
+      background: rgba(255,255,255,.03);
+    }
+
+    .metric .k {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .metric .v {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .cards {
+      display: grid;
+      gap: 10px;
+    }
+
+    .card {
+      border: 1px solid rgba(148,163,184,.18);
+      border-radius: 18px;
+      background: rgba(255,255,255,.03);
+      padding: 14px;
+    }
+
+    .card.active {
+      border-color: rgba(96,165,250,.5);
+      background: linear-gradient(180deg, rgba(96,165,250,.13), rgba(255,255,255,.03));
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: var(--chip);
+      color: #cfe3ff;
+    }
+
+    .badge.good { background: rgba(52,211,153,.14); }
+    .badge.warn { background: rgba(245,158,11,.16); }
+    .badge.danger { background: rgba(248,113,113,.16); }
+
+    .card p {
+      margin: 6px 0 0;
+      color: #d8e4f4;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .explain {
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(6, 15, 30, .55);
+      border: 1px solid rgba(148,163,184,.18);
+      color: #dbeafe;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .map-wrap {
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .map-head {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,.03);
+    }
+
+    .map-head .left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .map-head .title {
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .map-head .small {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    #map {
+      min-height: 560px;
+      height: 100%;
+      width: 100%;
+      background: #101827;
+    }
+
+    .footer-note {
+      margin-top: 12px;
+      color: #95a9c3;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .error {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(248,113,113,.12);
+      color: #fecaca;
+      border: 1px solid rgba(248,113,113,.28);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .switch-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .mini-chip {
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,.2);
+      background: rgba(255,255,255,.03);
+      font-size: 12px;
+      color: #d7e4f5;
+    }
+
+    .slider {
+      width: 100%;
+      accent-color: #60a5fa;
+    }
+
+    @media (max-width: 1100px) {
+      main { grid-template-columns: 1fr; }
+      #map { min-height: 480px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="title-row">
+        <div>
+          <h1>台北即時動態路徑 Prototype</h1>
+          <div class="subtitle">
+            這一版先把「真地圖、即時情境、策略決策、可展示 UI」做出來。之後可以把天氣、交通、人流改成 TDX 與台北資料大平台的實際資料源。
+          </div>
+        </div>
+        <div class="pill-row">
+          <span class="pill">Leaflet 地圖</span>
+          <span class="pill">情境權重</span>
+          <span class="pill">AI 解釋卡</span>
+          <span class="pill">GitHub Pages 友善</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <aside class="sidebar">
+        <div class="content">
+          <div class="section">
+            <h2>輸入條件</h2>
+            <label for="origin">起點</label>
+            <input id="origin" list="places" value="台北車站" />
+            <label for="destination">終點</label>
+            <input id="destination" list="places" value="台北101/世貿站" />
+            <datalist id="places"></datalist>
+            <div class="row">
+              <div>
+                <label for="weather">天氣情境</label>
+                <select id="weather">
+                  <option value="auto">自動偵測</option>
+                  <option value="sunny">晴天</option>
+                  <option value="rain">下雨</option>
+                  <option value="hot">炎熱</option>
+                  <option value="fog">能見度低</option>
+                </select>
+              </div>
+              <div>
+                <label for="mode">移動模式</label>
+                <select id="mode">
+                  <option value="walk">步行</option>
+                  <option value="drive">開車/機車</option>
+                  <option value="metro">大眾運輸</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <label for="crowd">人流壓力</label>
+                <input id="crowd" class="slider" type="range" min="0" max="100" value="58" />
+              </div>
+              <div>
+                <label for="timeBias">時段偏移</label>
+                <select id="timeBias">
+                  <option value="auto">自動使用現在時間</option>
+                  <option value="morning">早上</option>
+                  <option value="afternoon">下午</option>
+                  <option value="evening">晚上</option>
+                  <option value="late">深夜</option>
+                </select>
+              </div>
+            </div>
+            <div class="buttons">
+              <button class="primary" id="runBtn">計算最佳路線</button>
+              <button class="ghost" id="resetBtn">重設</button>
+            </div>
+            <div class="hint">可直接輸入下方地點名稱；第一版先用台北常見地點資料集，之後再接 TDX 與台北資料大平台。</div>
+            <div class="error" id="errorBox"></div>
+          </div>
+
+          <div class="section">
+            <h2>即時情境摘要</h2>
+            <div class="metrics">
+              <div class="metric">
+                <div class="k">目前時間</div>
+                <div class="v" id="currentTime">--:--</div>
+              </div>
+              <div class="metric">
+                <div class="k">天氣</div>
+                <div class="v" id="currentWeather">--</div>
+              </div>
+              <div class="metric">
+                <div class="k">人流</div>
+                <div class="v" id="currentCrowd">--</div>
+              </div>
+            </div>
+            <div class="switch-row" id="contextTags"></div>
+          </div>
+
+          <div class="section">
+            <h2>AI / 決策引擎輸出</h2>
+            <div class="cards" id="strategyCards"></div>
+            <div class="explain" id="explainBox">
+              按下「計算最佳路線」後，這裡會顯示策略理由。
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>第一版說明</h2>
+            <div class="footer-note">
+              這版是可展示的原型：真地圖 + 條件輸入 + 路線決策 + 解釋。下一步把天氣、人流、交通改成 API 讀取，就能對接 TDX 與台北資料大平台。
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <section class="stage">
+        <div class="map-wrap">
+          <div class="map-head">
+            <div class="left">
+              <div class="title">台北路線預覽</div>
+              <div class="small">顯示起點、終點與 AI 選出的策略路線（第一版以可展示為主）</div>
+            </div>
+            <div class="pill-row">
+              <span class="pill" id="routeLength">距離：-- km</span>
+              <span class="pill" id="routeScore">分數：--</span>
+            </div>
+          </div>
+          <div id="map"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    const places = {
+      "台北車站": { lat: 25.0478, lng: 121.5170 },
+      "西門町": { lat: 25.0422, lng: 121.5070 },
+      "台北101/世貿站": { lat: 25.0329, lng: 121.5604 },
+      "大安森林公園": { lat: 25.0339, lng: 121.5352 },
+      "松山文創園區": { lat: 25.0447, lng: 121.5600 },
+      "士林夜市": { lat: 25.0884, lng: 121.5245 },
+      "公館": { lat: 25.0148, lng: 121.5343 },
+      "南京復興": { lat: 25.0520, lng: 121.5447 },
+      "忠孝復興": { lat: 25.0419, lng: 121.5434 },
+      "中山": { lat: 25.0523, lng: 121.5201 },
+      "內湖科學園區": { lat: 25.0807, lng: 121.5775 },
+      "北投溫泉區": { lat: 25.1368, lng: 121.5077 }
+    };
+
+    const datalist = document.getElementById('places');
+    Object.keys(places).forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name;
+      datalist.appendChild(opt);
+    });
+
+    const originInput = document.getElementById('origin');
+    const destinationInput = document.getElementById('destination');
+    const weatherSelect = document.getElementById('weather');
+    const modeSelect = document.getElementById('mode');
+    const crowdSlider = document.getElementById('crowd');
+    const timeBiasSelect = document.getElementById('timeBias');
+    const runBtn = document.getElementById('runBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const errorBox = document.getElementById('errorBox');
+    const currentTimeEl = document.getElementById('currentTime');
+    const currentWeatherEl = document.getElementById('currentWeather');
+    const currentCrowdEl = document.getElementById('currentCrowd');
+    const tagsEl = document.getElementById('contextTags');
+    const cardsEl = document.getElementById('strategyCards');
+    const explainBox = document.getElementById('explainBox');
+    const routeLengthEl = document.getElementById('routeLength');
+    const routeScoreEl = document.getElementById('routeScore');
+
+    const map = L.map('map', { zoomControl: true }).setView([25.0484, 121.5324], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    let originMarker = null;
+    let destinationMarker = null;
+    let routeLayer = null;
+    let contextLayer = null;
+
+    function setError(msg) {
+      if (!msg) {
+        errorBox.style.display = 'none';
+        errorBox.textContent = '';
+        return;
+      }
+      errorBox.textContent = msg;
+      errorBox.style.display = 'block';
+    }
+
+    function getNowParts() {
+      const d = new Date();
+      return {
+        hour: d.getHours(),
+        minute: d.getMinutes(),
+        label: d.toLocaleString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false })
+      };
+    }
+
+    function autoWeatherByTime(hour) {
+      if (hour >= 18 || hour <= 5) return 'rain';
+      if (hour >= 11 && hour <= 15) return 'hot';
+      return 'sunny';
+    }
+
+    function timeBand(hour) {
+      if (hour >= 6 && hour < 11) return 'morning';
+      if (hour >= 11 && hour < 17) return 'afternoon';
+      if (hour >= 17 && hour < 22) return 'evening';
+      return 'late';
+    }
+
+    function weatherLabel(v) {
+      return ({ auto: '自動', sunny: '晴天', rain: '下雨', hot: '炎熱', fog: '低能見度' })[v] || v;
+    }
+
+    function weatherIcon(v) {
+      return ({ sunny: '☀️', rain: '🌧️', hot: '🥵', fog: '🌫️' })[v] || '🌤️';
+    }
+
+    function modeLabel(v) {
+      return ({ walk: '步行', drive: '車輛', metro: '大眾運輸' })[v] || v;
+    }
+
+    function crowdLabel(score) {
+      if (score < 34) return '低';
+      if (score < 67) return '中';
+      return '高';
+    }
+
+    function distanceKm(a, b) {
+      const R = 6371;
+      const dLat = (b.lat - a.lat) * Math.PI / 180;
+      const dLng = (b.lng - a.lng) * Math.PI / 180;
+      const lat1 = a.lat * Math.PI / 180;
+      const lat2 = b.lat * Math.PI / 180;
+      const s1 = Math.sin(dLat / 2) ** 2;
+      const s2 = Math.sin(dLng / 2) ** 2 * Math.cos(lat1) * Math.cos(lat2);
+      return 2 * R * Math.asin(Math.sqrt(s1 + s2));
+    }
+
+    function midpointWithOffset(a, b, weather, crowd, mode) {
+      const mid = { lat: (a.lat + b.lat) / 2, lng: (a.lng + b.lng) / 2 };
+      let latShift = 0;
+      let lngShift = 0;
+
+      if (weather === 'rain') latShift += 0.006;
+      if (weather === 'hot') lngShift += 0.004;
+      if (weather === 'fog') latShift += 0.003;
+      if (crowd >= 70) lngShift -= 0.005;
+      if (mode === 'metro') latShift -= 0.003;
+      if (mode === 'drive') lngShift += 0.002;
+
+      return { lat: mid.lat + latShift, lng: mid.lng + lngShift };
+    }
+
+    function scenarioFromControls() {
+      const now = getNowParts();
+      const selectedTime = timeBiasSelect.value === 'auto' ? timeBand(now.hour) : timeBiasSelect.value;
+      const weather = weatherSelect.value === 'auto' ? autoWeatherByTime(now.hour) : weatherSelect.value;
+      const crowd = Number(crowdSlider.value);
+      return { now, selectedTime, weather, crowd };
+    }
+
+    function scoreStrategies(distance, weather, crowd, mode, timeBandValue) {
+      const baseFast = Math.max(5, 100 - distance * 9 - crowd * 0.25);
+      const baseComfort = Math.max(5, 100 - distance * 7 - crowd * 0.15);
+      const baseBalanced = Math.max(5, 100 - distance * 8 - crowd * 0.2);
+
+      let weatherPenaltyFast = 0;
+      let weatherPenaltyComfort = 0;
+      let weatherPenaltyBalanced = 0;
+
+      if (weather === 'rain') {
+        weatherPenaltyFast = 10;
+        weatherPenaltyComfort = 2;
+        weatherPenaltyBalanced = 5;
+      } else if (weather === 'hot') {
+        weatherPenaltyFast = 6;
+        weatherPenaltyComfort = 3;
+        weatherPenaltyBalanced = 4;
+      } else if (weather === 'fog') {
+        weatherPenaltyFast = 8;
+        weatherPenaltyComfort = 6;
+        weatherPenaltyBalanced = 7;
+      }
+
+      if (mode === 'metro') {
+        weatherPenaltyComfort -= 2;
+        weatherPenaltyBalanced -= 1;
+      }
+
+      if (timeBandValue === 'late') {
+        weatherPenaltyFast += 3;
+        weatherPenaltyComfort += 2;
+      }
+
+      const fast = baseFast - weatherPenaltyFast - (mode === 'walk' ? 2 : 0);
+      const comfort = baseComfort - weatherPenaltyComfort + (mode === 'metro' ? 6 : 0);
+      const balanced = baseBalanced - weatherPenaltyBalanced;
+
+      const options = [
+        {
+          key: 'fast',
+          title: '最快優先',
+          badge: '速度',
+          badgeClass: 'good',
+          score: fast,
+          reason: '縮短預估時間，適合一般通勤與不想繞路的情境。'
+        },
+        {
+          key: 'balanced',
+          title: '速度 / 舒適平衡',
+          badge: '平衡',
+          badgeClass: 'warn',
+          score: balanced,
+          reason: '在時間、舒適與情境風險之間取得折衷。'
+        },
+        {
+          key: 'comfort',
+          title: '舒適優先',
+          badge: '舒適',
+          badgeClass: 'good',
+          score: comfort,
+          reason: '在雨天、晚間或人流較高時，偏向更安全或更穩定的路徑。'
+        }
+      ].sort((a, b) => b.score - a.score);
+
+      return options;
+    }
+
+    function selectBestStrategy(options, weather, crowd, timeBandValue, mode) {
+      if (weather === 'rain' || weather === 'fog') {
+        const found = options.find(o => o.key === 'comfort');
+        if (found && found.score >= options[0].score - 8) return found;
+      }
+      if (crowd >= 70 && timeBandValue !== 'morning') {
+        const found = options.find(o => o.key === 'balanced');
+        if (found) return found;
+      }
+      if (mode === 'metro') {
+        const found = options.find(o => o.key !== 'fast');
+        if (found && found.score >= options[0].score - 5) return found;
+      }
+      return options[0];
+    }
+
+    function renderContextTags(context) {
+      const tags = [
+        `時間：${context.now.label}`,
+        `時段：${context.selectedTime}`,
+        `天氣：${weatherIcon(context.weather)} ${weatherLabel(context.weather)}`,
+        `人流：${crowdLabel(context.crowd)}`,
+        `模式：${modeLabel(modeSelect.value)}`
+      ];
+      tagsEl.innerHTML = tags.map(t => `<span class="mini-chip">${t}</span>`).join('');
+      currentTimeEl.textContent = context.now.label;
+      currentWeatherEl.textContent = `${weatherIcon(context.weather)} ${weatherLabel(context.weather)}`;
+      currentCrowdEl.textContent = `${crowdLabel(context.crowd)}`;
+    }
+
+    function drawRoute(origin, destination, context, strategy) {
+      if (routeLayer) map.removeLayer(routeLayer);
+      if (contextLayer) map.removeLayer(contextLayer);
+
+      const via = midpointWithOffset(origin, destination, context.weather, context.crowd, modeSelect.value);
+      const path = [
+        [origin.lat, origin.lng],
+        [via.lat, via.lng],
+        [destination.lat, destination.lng]
+      ];
+
+      const baseColor = strategy.key === 'comfort' ? '#34d399' : strategy.key === 'balanced' ? '#f59e0b' : '#60a5fa';
+      routeLayer = L.polyline(path, {
+        color: baseColor,
+        weight: 5,
+        opacity: 0.9,
+        lineCap: 'round'
+      }).addTo(map);
+
+      if (originMarker) map.removeLayer(originMarker);
+      if (destinationMarker) map.removeLayer(destinationMarker);
+
+      originMarker = L.circleMarker([origin.lat, origin.lng], {
+        radius: 9,
+        color: '#a7f3d0',
+        weight: 3,
+        fillColor: '#10b981',
+        fillOpacity: 0.95
+      }).addTo(map).bindPopup(`起點：${escapeHtml(origin.name)}`);
+
+      destinationMarker = L.circleMarker([destination.lat, destination.lng], {
+        radius: 9,
+        color: '#bfdbfe',
+        weight: 3,
+        fillColor: '#3b82f6',
+        fillOpacity: 0.95
+      }).addTo(map).bindPopup(`終點：${escapeHtml(destination.name)}`);
+
+      contextLayer = L.layerGroup([
+        L.marker([via.lat, via.lng]).bindPopup(`策略中繼點：${strategy.title}`)
+      ]).addTo(map);
+
+      const bounds = L.latLngBounds([ [origin.lat, origin.lng], [destination.lat, destination.lng], [via.lat, via.lng] ]);
+      map.fitBounds(bounds.pad(0.18));
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function renderStrategyCards(options, best) {
+      cardsEl.innerHTML = options.map(o => `
+        <div class="card ${o.key === best.key ? 'active' : ''}">
+          <div class="card-top">
+            <strong>${o.title}</strong>
+            <span class="badge ${o.key === 'comfort' ? 'good' : o.key === 'balanced' ? 'warn' : ''}">${o.badge}</span>
+          </div>
+          <div class="card-top" style="margin-bottom:0;">
+            <span style="color:#cfe3ff;font-size:13px;">評分：${o.score.toFixed(1)}</span>
+            <span style="color:#9fb2cc;font-size:12px;">${o.key === best.key ? '目前選用' : '備選'}</span>
+          </div>
+          <p>${o.reason}</p>
+        </div>
+      `).join('');
+    }
+
+    function updateRouteSummary(origin, destination, context, best, distance) {
+      routeLengthEl.textContent = `距離：${distance.toFixed(2)} km`;
+      routeScoreEl.textContent = `分數：${best.score.toFixed(1)}`;
+      explainBox.innerHTML = `
+        <strong>${best.title}</strong><br>
+        因為目前條件是 <strong>${weatherLabel(context.weather)}</strong>、<strong>${context.selectedTime}</strong>、
+        <strong>${crowdLabel(context.crowd)} 人流</strong>，系統目前偏向選擇 <strong>${modeLabel(modeSelect.value)}</strong> 情境下的
+        <strong>${best.title}</strong> 路線。<br><br>
+        這一版先用可解釋的權重模型示範；下一步可以把權重來源換成 <strong>TDX</strong> 的交通資料，
+        再搭配 <strong>台北資料大平台</strong> 的區域資訊做更細的策略判斷。
+      `;
+    }
+
+    function getPlace(name) {
+      return places[name?.trim()];
+    }
+
+    function run() {
+      setError('');
+      const originName = originInput.value.trim();
+      const destinationName = destinationInput.value.trim();
+      const origin = getPlace(originName);
+      const destination = getPlace(destinationName);
+
+      if (!origin || !destination) {
+        setError('第一版先支援地點清單中的台北地點。請從輸入框下拉建議中選一個已知地點，例如「台北車站」到「台北101/世貿站」。');
+        return;
+      }
+
+      const context = scenarioFromControls();
+      renderContextTags(context);
+
+      const distance = distanceKm(origin, destination);
+      const strategies = scoreStrategies(distance, context.weather, context.crowd, modeSelect.value, context.selectedTime);
+      const best = selectBestStrategy(strategies, context.weather, context.crowd, context.selectedTime, modeSelect.value);
+
+      renderStrategyCards(strategies, best);
+      drawRoute({ ...origin, name: originName }, { ...destination, name: destinationName }, context, best);
+      updateRouteSummary(origin, destination, context, best, distance);
+    }
+
+    function autoRefreshTime() {
+      const context = scenarioFromControls();
+      renderContextTags(context);
+    }
+
+    function resetAll() {
+      originInput.value = '台北車站';
+      destinationInput.value = '台北101/世貿站';
+      weatherSelect.value = 'auto';
+      modeSelect.value = 'walk';
+      crowdSlider.value = 58;
+      timeBiasSelect.value = 'auto';
+      setError('');
+      run();
+    }
+
+    runBtn.addEventListener('click', run);
+    resetBtn.addEventListener('click', resetAll);
+    [originInput, destinationInput, weatherSelect, modeSelect, crowdSlider, timeBiasSelect].forEach(el => {
+      el.addEventListener('change', autoRefreshTime);
+      el.addEventListener('input', autoRefreshTime);
+    });
+
+    setInterval(() => {
+      if (timeBiasSelect.value === 'auto' || weatherSelect.value === 'auto') {
+        autoRefreshTime();
+      }
+    }, 1000 * 30);
+
+    resetAll();
+  </script>
+</body>
+</html>
