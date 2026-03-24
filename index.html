@@ -532,11 +532,28 @@
     const routeLengthEl = document.getElementById('routeLength');
     const routeScoreEl = document.getElementById('routeScore');
 
-    const map = L.map('map', { zoomControl: true }).setView([25.0484, 121.5324], 13);
+    const taipeiBounds = [
+      [24.96, 121.46], // 西南角
+      [25.22, 121.66]  // 東北角
+    ];
+
+    const map = L.map('map', {
+      zoomControl: true,
+      maxBounds: taipeiBounds,
+      maxBoundsViscosity: 1.0
+    }).setView([25.0484, 121.5324], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
+
+    L.rectangle(taipeiBounds, {
+      color: '#60a5fa',
+      weight: 2,
+      fill: false
+    }).addTo(map);
+
+    map.fitBounds(taipeiBounds);
 
     let originMarker = null;
     let destinationMarker = null;
