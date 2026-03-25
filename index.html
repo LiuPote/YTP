@@ -540,12 +540,31 @@
     const map = L.map('map', {
       zoomControl: true,
       maxBounds: taipeiBounds,
-      maxBoundsViscosity: 1.0
+      maxBoundsViscosity: 1.0,
+      minZoom: 11,
+      worldCopyJump: false
     }).setView([25.0484, 121.5324], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
-      attribution: '&copy; OpenStreetMap contributors'
+      attribution: '&copy; OpenStreetMap contributors',
+      noWrap: true,
+      bounds: taipeiBounds
     }).addTo(map);
+
+    // 外圍遮罩：把台北市以外的部分蓋掉，讓畫面只剩台北市範圍
+    const maskPane = map.createPane('taipeiMaskPane');
+    maskPane.style.zIndex = 410;
+    const maskStyle = {
+      stroke: false,
+      fillColor: '#09101b',
+      fillOpacity: 0.92,
+      interactive: false,
+      pane: 'taipeiMaskPane'
+    };
+    L.rectangle([[90, -180], [24.96, 180]], maskStyle).addTo(map); // 上方
+    L.rectangle([[24.96, -180], [25.22, 121.46]], maskStyle).addTo(map); // 左方
+    L.rectangle([[24.96, 121.66], [25.22, 180]], maskStyle).addTo(map); // 右方
+    L.rectangle([[25.22, -180], [90, 180]], maskStyle).addTo(map); // 下方
 
     L.rectangle(taipeiBounds, {
       color: '#60a5fa',
