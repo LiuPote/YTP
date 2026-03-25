@@ -11,16 +11,13 @@
   <style>
     :root {
       --bg: #0b1220;
-      --panel: rgba(17, 24, 39, 0.78);
-      --panel-2: rgba(15, 23, 42, 0.92);
+      --panel: rgba(17, 24, 39, 0.84);
       --line: rgba(148, 163, 184, 0.18);
       --text: #e5eefb;
       --muted: #9fb2cc;
       --accent: #60a5fa;
       --accent-2: #34d399;
       --warn: #f59e0b;
-      --danger: #f87171;
-      --chip: rgba(96, 165, 250, 0.12);
       --shadow: 0 20px 60px rgba(0,0,0,.35);
     }
 
@@ -43,7 +40,7 @@
     }
 
     header {
-      padding: 20px 24px 10px;
+      padding: 20px 24px 12px;
       border-bottom: 1px solid var(--line);
       background: linear-gradient(180deg, rgba(8,15,29,.94), rgba(8,15,29,.62));
       backdrop-filter: blur(10px);
@@ -70,7 +67,7 @@
       margin-top: 6px;
       color: var(--muted);
       font-size: 14px;
-      max-width: 950px;
+      max-width: 980px;
       line-height: 1.6;
     }
 
@@ -91,7 +88,7 @@
 
     main {
       display: grid;
-      grid-template-columns: 410px 1fr;
+      grid-template-columns: 420px 1fr;
       gap: 18px;
       padding: 18px;
       min-height: 0;
@@ -145,7 +142,7 @@
 
     input, select, textarea {
       border: 1px solid rgba(148,163,184,.22);
-      background: rgba(15,23,42,.95);
+      background: rgba(15,23,42,.96);
       color: var(--text);
       border-radius: 14px;
       padding: 12px 14px;
@@ -164,16 +161,9 @@
       gap: 10px;
     }
 
-    .hint {
-      margin-top: 6px;
-      color: #8fa5bf;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
     .buttons {
       display: grid;
-      grid-template-columns: 1.3fr .7fr;
+      grid-template-columns: 1.2fr .8fr;
       gap: 10px;
       margin-top: 12px;
     }
@@ -194,6 +184,69 @@
       background: rgba(255,255,255,.06);
       color: var(--text);
       border: 1px solid rgba(148,163,184,.2);
+    }
+
+    .hint {
+      margin-top: 8px;
+      color: #8fa5bf;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .error {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(248,113,113,.12);
+      color: #fecaca;
+      border: 1px solid rgba(248,113,113,.28);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .search-wrap {
+      position: relative;
+    }
+
+    .suggestions {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: #0f172a;
+      border: 1px solid rgba(148,163,184,.22);
+      border-radius: 14px;
+      box-shadow: 0 18px 45px rgba(0,0,0,.35);
+      overflow: hidden;
+      z-index: 30;
+      display: none;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .suggestion {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(148,163,184,.12);
+      cursor: pointer;
+      transition: background .15s ease;
+    }
+
+    .suggestion:last-child { border-bottom: none; }
+    .suggestion:hover { background: rgba(96,165,250,.12); }
+    .suggestion .name { font-size: 14px; color: #eaf2ff; line-height: 1.45; }
+    .suggestion .meta { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+
+    .selection {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,.16);
+      background: rgba(255,255,255,.03);
+      color: #dbeafe;
+      font-size: 13px;
+      line-height: 1.5;
+      min-height: 44px;
     }
 
     .metrics {
@@ -252,13 +305,12 @@
       padding: 6px 10px;
       border-radius: 999px;
       font-size: 12px;
-      background: var(--chip);
+      background: rgba(96, 165, 250, 0.12);
       color: #cfe3ff;
     }
 
     .badge.good { background: rgba(52,211,153,.14); }
     .badge.warn { background: rgba(245,158,11,.16); }
-    .badge.danger { background: rgba(248,113,113,.16); }
 
     .card p {
       margin: 6px 0 0;
@@ -292,6 +344,7 @@
       align-items: center;
       gap: 12px;
       background: rgba(255,255,255,.03);
+      flex-wrap: wrap;
     }
 
     .map-head .left {
@@ -311,7 +364,7 @@
     }
 
     #map {
-      min-height: 560px;
+      min-height: 600px;
       height: 100%;
       width: 100%;
       background: #101827;
@@ -324,23 +377,11 @@
       line-height: 1.5;
     }
 
-    .error {
-      display: none;
-      margin-top: 10px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: rgba(248,113,113,.12);
-      color: #fecaca;
-      border: 1px solid rgba(248,113,113,.28);
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .switch-row {
+    .mini-chip-row {
       display: flex;
-      gap: 10px;
       flex-wrap: wrap;
-      margin-top: 8px;
+      gap: 8px;
+      margin-top: 10px;
     }
 
     .mini-chip {
@@ -352,14 +393,27 @@
       color: #d7e4f5;
     }
 
-    .slider {
-      width: 100%;
-      accent-color: #60a5fa;
+    .map-tools {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .map-tools button {
+      width: auto;
+      padding: 9px 12px;
+      font-size: 12px;
+    }
+
+    .map-tools button.selected {
+      background: linear-gradient(135deg, #60a5fa, #34d399);
+      color: #05111f;
     }
 
     @media (max-width: 1100px) {
       main { grid-template-columns: 1fr; }
-      #map { min-height: 480px; }
+      #map { min-height: 520px; }
     }
   </style>
 </head>
@@ -370,14 +424,14 @@
         <div>
           <h1>台北即時動態路徑 Prototype</h1>
           <div class="subtitle">
-            這一版先把「真地圖、即時情境、策略決策、可展示 UI」做出來。之後可以把天氣、交通、人流改成 TDX 與台北資料大平台的實際資料源。
+            這版使用網路地圖與地名搜尋：底圖來自 OpenStreetMap，地點由 Nominatim 轉成座標；之後可再把 TDX 與台北資料大平臺的即時資料接進來。
           </div>
         </div>
         <div class="pill-row">
-          <span class="pill">Leaflet 地圖</span>
-          <span class="pill">情境權重</span>
-          <span class="pill">AI 解釋卡</span>
-          <span class="pill">GitHub Pages 友善</span>
+          <span class="pill">OSM 地圖</span>
+          <span class="pill">Nominatim 搜尋</span>
+          <span class="pill">台北市範圍</span>
+          <span class="pill">可點圖選點</span>
         </div>
       </div>
     </header>
@@ -386,12 +440,34 @@
       <aside class="sidebar">
         <div class="content">
           <div class="section">
-            <h2>輸入條件</h2>
-            <label for="origin">起點</label>
-            <input id="origin" list="places" value="台北車站" />
-            <label for="destination">終點</label>
-            <input id="destination" list="places" value="台北101/世貿站" />
-            <datalist id="places"></datalist>
+            <h2>選擇起點 / 終點</h2>
+
+            <div class="map-tools">
+              <button class="selected" id="pickOriginBtn">點選起點</button>
+              <button class="ghost" id="pickDestinationBtn">點選終點</button>
+              <button class="ghost" id="clearBtn">清除地點</button>
+            </div>
+
+            <label for="originQuery">起點搜尋</label>
+            <div class="search-wrap">
+              <input id="originQuery" placeholder="輸入台北市內地點、地址或地標，例如：台北車站" autocomplete="off" />
+              <div class="suggestions" id="originSuggestions"></div>
+            </div>
+            <div class="selection" id="originSelection">尚未選擇起點</div>
+
+            <label for="destinationQuery">終點搜尋</label>
+            <div class="search-wrap">
+              <input id="destinationQuery" placeholder="輸入台北市內地點、地址或地標，例如：台北101" autocomplete="off" />
+              <div class="suggestions" id="destinationSuggestions"></div>
+            </div>
+            <div class="selection" id="destinationSelection">尚未選擇終點</div>
+
+            <div class="hint">你可以直接打地名、地址、商家或景點，從網路搜尋後選一個結果。也可以先按「點選起點／終點」再直接點地圖。</div>
+            <div class="error" id="errorBox"></div>
+          </div>
+
+          <div class="section">
+            <h2>情境條件</h2>
             <div class="row">
               <div>
                 <label for="weather">天氣情境</label>
@@ -400,14 +476,14 @@
                   <option value="sunny">晴天</option>
                   <option value="rain">下雨</option>
                   <option value="hot">炎熱</option>
-                  <option value="fog">能見度低</option>
+                  <option value="fog">低能見度</option>
                 </select>
               </div>
               <div>
                 <label for="mode">移動模式</label>
                 <select id="mode">
                   <option value="walk">步行</option>
-                  <option value="drive">開車/機車</option>
+                  <option value="drive">開車 / 機車</option>
                   <option value="metro">大眾運輸</option>
                 </select>
               </div>
@@ -415,7 +491,7 @@
             <div class="row">
               <div>
                 <label for="crowd">人流壓力</label>
-                <input id="crowd" class="slider" type="range" min="0" max="100" value="58" />
+                <input id="crowd" type="range" min="0" max="100" value="58" />
               </div>
               <div>
                 <label for="timeBias">時段偏移</label>
@@ -432,12 +508,10 @@
               <button class="primary" id="runBtn">計算最佳路線</button>
               <button class="ghost" id="resetBtn">重設</button>
             </div>
-            <div class="hint">可直接輸入下方地點名稱；第一版先用台北常見地點資料集，之後再接 TDX 與台北資料大平台。</div>
-            <div class="error" id="errorBox"></div>
           </div>
 
           <div class="section">
-            <h2>即時情境摘要</h2>
+            <h2>即時摘要</h2>
             <div class="metrics">
               <div class="metric">
                 <div class="k">目前時間</div>
@@ -452,21 +526,19 @@
                 <div class="v" id="currentCrowd">--</div>
               </div>
             </div>
-            <div class="switch-row" id="contextTags"></div>
+            <div class="mini-chip-row" id="contextTags"></div>
           </div>
 
           <div class="section">
             <h2>AI / 決策引擎輸出</h2>
             <div class="cards" id="strategyCards"></div>
-            <div class="explain" id="explainBox">
-              按下「計算最佳路線」後，這裡會顯示策略理由。
-            </div>
+            <div class="explain" id="explainBox">選好起點與終點後，這裡會顯示策略理由。</div>
           </div>
 
           <div class="section">
             <h2>第一版說明</h2>
             <div class="footer-note">
-              這版是可展示的原型：真地圖 + 條件輸入 + 路線決策 + 解釋。下一步把天氣、人流、交通改成 API 讀取，就能對接 TDX 與台北資料大平台。
+              這版的重點是：任意搜尋台北市內地點、把點精準放到地圖上、再根據情境切換路線策略。下一步可把天氣、交通壅塞與人流改成 TDX / 台北資料大平臺的 API。
             </div>
           </div>
         </div>
@@ -476,8 +548,8 @@
         <div class="map-wrap">
           <div class="map-head">
             <div class="left">
-              <div class="title">台北路線預覽</div>
-              <div class="small">顯示起點、終點與 AI 選出的策略路線（第一版以可展示為主）</div>
+              <div class="title">台北市地圖</div>
+              <div class="small">外圍已遮罩，地點透過網路搜尋轉成座標後放上地圖</div>
             </div>
             <div class="pill-row">
               <span class="pill" id="routeLength">距離：-- km</span>
@@ -492,50 +564,11 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
-    const places = {
-      "台北車站": { lat: 25.0478, lng: 121.5170 },
-      "西門町": { lat: 25.0422, lng: 121.5070 },
-      "台北101/世貿站": { lat: 25.0329, lng: 121.5604 },
-      "大安森林公園": { lat: 25.0339, lng: 121.5352 },
-      "松山文創園區": { lat: 25.0447, lng: 121.5600 },
-      "士林夜市": { lat: 25.0884, lng: 121.5245 },
-      "公館": { lat: 25.0148, lng: 121.5343 },
-      "南京復興": { lat: 25.0520, lng: 121.5447 },
-      "忠孝復興": { lat: 25.0419, lng: 121.5434 },
-      "中山": { lat: 25.0523, lng: 121.5201 },
-      "內湖科學園區": { lat: 25.0807, lng: 121.5775 },
-      "北投溫泉區": { lat: 25.1368, lng: 121.5077 }
-    };
-
-    const datalist = document.getElementById('places');
-    Object.keys(places).forEach(name => {
-      const opt = document.createElement('option');
-      opt.value = name;
-      datalist.appendChild(opt);
-    });
-
-    const originInput = document.getElementById('origin');
-    const destinationInput = document.getElementById('destination');
-    const weatherSelect = document.getElementById('weather');
-    const modeSelect = document.getElementById('mode');
-    const crowdSlider = document.getElementById('crowd');
-    const timeBiasSelect = document.getElementById('timeBias');
-    const runBtn = document.getElementById('runBtn');
-    const resetBtn = document.getElementById('resetBtn');
-    const errorBox = document.getElementById('errorBox');
-    const currentTimeEl = document.getElementById('currentTime');
-    const currentWeatherEl = document.getElementById('currentWeather');
-    const currentCrowdEl = document.getElementById('currentCrowd');
-    const tagsEl = document.getElementById('contextTags');
-    const cardsEl = document.getElementById('strategyCards');
-    const explainBox = document.getElementById('explainBox');
-    const routeLengthEl = document.getElementById('routeLength');
-    const routeScoreEl = document.getElementById('routeScore');
-
     const taipeiBounds = [
-      [24.96, 121.46], // 西南角
-      [25.22, 121.66]  // 東北角
+      [24.96, 121.46],
+      [25.22, 121.66]
     ];
+    const taipeiViewbox = "121.46,25.22,121.66,24.96"; // left,top,right,bottom
 
     const map = L.map('map', {
       zoomControl: true,
@@ -544,6 +577,7 @@
       minZoom: 11,
       worldCopyJump: false
     }).setView([25.0484, 121.5324], 13);
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors',
@@ -551,7 +585,7 @@
       bounds: taipeiBounds
     }).addTo(map);
 
-    // 外圍遮罩：把台北市以外的部分蓋掉，讓畫面只剩台北市範圍
+    // 遮罩：把台北市外圍蓋起來
     const maskPane = map.createPane('taipeiMaskPane');
     maskPane.style.zIndex = 410;
     const maskStyle = {
@@ -561,39 +595,77 @@
       interactive: false,
       pane: 'taipeiMaskPane'
     };
-    L.rectangle([[90, -180], [24.96, 180]], maskStyle).addTo(map); // 上方
-    L.rectangle([[24.96, -180], [25.22, 121.46]], maskStyle).addTo(map); // 左方
-    L.rectangle([[24.96, 121.66], [25.22, 180]], maskStyle).addTo(map); // 右方
-    L.rectangle([[25.22, -180], [90, 180]], maskStyle).addTo(map); // 下方
-
+    L.rectangle([[90, -180], [24.96, 180]], maskStyle).addTo(map);
+    L.rectangle([[24.96, -180], [25.22, 121.46]], maskStyle).addTo(map);
+    L.rectangle([[24.96, 121.66], [25.22, 180]], maskStyle).addTo(map);
+    L.rectangle([[25.22, -180], [90, 180]], maskStyle).addTo(map);
     L.rectangle(taipeiBounds, {
       color: '#60a5fa',
       weight: 2,
       fill: false
     }).addTo(map);
-
     map.fitBounds(taipeiBounds);
 
+    const els = {
+      originQuery: document.getElementById('originQuery'),
+      destinationQuery: document.getElementById('destinationQuery'),
+      originSuggestions: document.getElementById('originSuggestions'),
+      destinationSuggestions: document.getElementById('destinationSuggestions'),
+      originSelection: document.getElementById('originSelection'),
+      destinationSelection: document.getElementById('destinationSelection'),
+      weather: document.getElementById('weather'),
+      mode: document.getElementById('mode'),
+      crowd: document.getElementById('crowd'),
+      timeBias: document.getElementById('timeBias'),
+      runBtn: document.getElementById('runBtn'),
+      resetBtn: document.getElementById('resetBtn'),
+      clearBtn: document.getElementById('clearBtn'),
+      pickOriginBtn: document.getElementById('pickOriginBtn'),
+      pickDestinationBtn: document.getElementById('pickDestinationBtn'),
+      errorBox: document.getElementById('errorBox'),
+      currentTime: document.getElementById('currentTime'),
+      currentWeather: document.getElementById('currentWeather'),
+      currentCrowd: document.getElementById('currentCrowd'),
+      contextTags: document.getElementById('contextTags'),
+      strategyCards: document.getElementById('strategyCards'),
+      explainBox: document.getElementById('explainBox'),
+      routeLength: document.getElementById('routeLength'),
+      routeScore: document.getElementById('routeScore')
+    };
+
+    let origin = null;
+    let destination = null;
     let originMarker = null;
     let destinationMarker = null;
     let routeLayer = null;
     let contextLayer = null;
+    let activePick = 'origin';
+    let debounceTimers = { origin: null, destination: null };
+    let currentRequestId = { origin: 0, destination: 0 };
 
     function setError(msg) {
       if (!msg) {
-        errorBox.style.display = 'none';
-        errorBox.textContent = '';
+        els.errorBox.style.display = 'none';
+        els.errorBox.textContent = '';
         return;
       }
-      errorBox.textContent = msg;
-      errorBox.style.display = 'block';
+      els.errorBox.textContent = msg;
+      els.errorBox.style.display = 'block';
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
     }
 
     function getNowParts() {
       const d = new Date();
       return {
         hour: d.getHours(),
-        minute: d.getMinutes(),
         label: d.toLocaleString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false })
       };
     }
@@ -644,23 +716,31 @@
       const mid = { lat: (a.lat + b.lat) / 2, lng: (a.lng + b.lng) / 2 };
       let latShift = 0;
       let lngShift = 0;
-
       if (weather === 'rain') latShift += 0.006;
       if (weather === 'hot') lngShift += 0.004;
       if (weather === 'fog') latShift += 0.003;
       if (crowd >= 70) lngShift -= 0.005;
       if (mode === 'metro') latShift -= 0.003;
       if (mode === 'drive') lngShift += 0.002;
-
       return { lat: mid.lat + latShift, lng: mid.lng + lngShift };
     }
 
-    function scenarioFromControls() {
+    function updateSummary() {
       const now = getNowParts();
-      const selectedTime = timeBiasSelect.value === 'auto' ? timeBand(now.hour) : timeBiasSelect.value;
-      const weather = weatherSelect.value === 'auto' ? autoWeatherByTime(now.hour) : weatherSelect.value;
-      const crowd = Number(crowdSlider.value);
-      return { now, selectedTime, weather, crowd };
+      const selectedTime = els.timeBias.value === 'auto' ? timeBand(now.hour) : els.timeBias.value;
+      const weather = els.weather.value === 'auto' ? autoWeatherByTime(now.hour) : els.weather.value;
+      const crowd = Number(els.crowd.value);
+
+      els.currentTime.textContent = now.label;
+      els.currentWeather.textContent = `${weatherIcon(weather)} ${weatherLabel(weather)}`;
+      els.currentCrowd.textContent = crowdLabel(crowd);
+      els.contextTags.innerHTML = [
+        `時間：${now.label}`,
+        `時段：${selectedTime}`,
+        `天氣：${weatherLabel(weather)}`,
+        `模式：${modeLabel(els.mode.value)}`,
+        `人流：${crowdLabel(crowd)}`
+      ].map(t => `<span class="mini-chip">${t}</span>`).join('');
     }
 
     function scoreStrategies(distance, weather, crowd, mode, timeBandValue) {
@@ -696,25 +776,21 @@
         weatherPenaltyComfort += 2;
       }
 
-      const fast = baseFast - weatherPenaltyFast - (mode === 'walk' ? 2 : 0);
-      const comfort = baseComfort - weatherPenaltyComfort + (mode === 'metro' ? 6 : 0);
-      const balanced = baseBalanced - weatherPenaltyBalanced;
-
-      const options = [
+      return [
         {
           key: 'fast',
           title: '最快優先',
           badge: '速度',
           badgeClass: 'good',
-          score: fast,
-          reason: '縮短預估時間，適合一般通勤與不想繞路的情境。'
+          score: baseFast - weatherPenaltyFast - (mode === 'walk' ? 2 : 0),
+          reason: '優先縮短預估時間，適合一般通勤與不想繞路的情境。'
         },
         {
           key: 'balanced',
           title: '速度 / 舒適平衡',
           badge: '平衡',
           badgeClass: 'warn',
-          score: balanced,
+          score: baseBalanced - weatherPenaltyBalanced,
           reason: '在時間、舒適與情境風險之間取得折衷。'
         },
         {
@@ -722,105 +798,34 @@
           title: '舒適優先',
           badge: '舒適',
           badgeClass: 'good',
-          score: comfort,
-          reason: '在雨天、晚間或人流較高時，偏向更安全或更穩定的路徑。'
+          score: baseComfort - weatherPenaltyComfort + (mode === 'metro' ? 6 : 0),
+          reason: '在雨天、晚間或人流較高時，偏向更安全或更穩定的路線。'
         }
       ].sort((a, b) => b.score - a.score);
-
-      return options;
     }
 
     function selectBestStrategy(options, weather, crowd, timeBandValue, mode) {
       if (weather === 'rain' || weather === 'fog') {
-        const found = options.find(o => o.key === 'comfort');
-        if (found && found.score >= options[0].score - 8) return found;
+        const comfort = options.find(o => o.key === 'comfort');
+        if (comfort && comfort.score >= options[0].score - 8) return comfort;
       }
       if (crowd >= 70 && timeBandValue !== 'morning') {
-        const found = options.find(o => o.key === 'balanced');
-        if (found) return found;
+        const balanced = options.find(o => o.key === 'balanced');
+        if (balanced) return balanced;
       }
       if (mode === 'metro') {
-        const found = options.find(o => o.key !== 'fast');
-        if (found && found.score >= options[0].score - 5) return found;
+        const notFast = options.find(o => o.key !== 'fast');
+        if (notFast && notFast.score >= options[0].score - 5) return notFast;
       }
       return options[0];
     }
 
-    function renderContextTags(context) {
-      const tags = [
-        `時間：${context.now.label}`,
-        `時段：${context.selectedTime}`,
-        `天氣：${weatherIcon(context.weather)} ${weatherLabel(context.weather)}`,
-        `人流：${crowdLabel(context.crowd)}`,
-        `模式：${modeLabel(modeSelect.value)}`
-      ];
-      tagsEl.innerHTML = tags.map(t => `<span class="mini-chip">${t}</span>`).join('');
-      currentTimeEl.textContent = context.now.label;
-      currentWeatherEl.textContent = `${weatherIcon(context.weather)} ${weatherLabel(context.weather)}`;
-      currentCrowdEl.textContent = `${crowdLabel(context.crowd)}`;
-    }
-
-    function drawRoute(origin, destination, context, strategy) {
-      if (routeLayer) map.removeLayer(routeLayer);
-      if (contextLayer) map.removeLayer(contextLayer);
-
-      const via = midpointWithOffset(origin, destination, context.weather, context.crowd, modeSelect.value);
-      const path = [
-        [origin.lat, origin.lng],
-        [via.lat, via.lng],
-        [destination.lat, destination.lng]
-      ];
-
-      const baseColor = strategy.key === 'comfort' ? '#34d399' : strategy.key === 'balanced' ? '#f59e0b' : '#60a5fa';
-      routeLayer = L.polyline(path, {
-        color: baseColor,
-        weight: 5,
-        opacity: 0.9,
-        lineCap: 'round'
-      }).addTo(map);
-
-      if (originMarker) map.removeLayer(originMarker);
-      if (destinationMarker) map.removeLayer(destinationMarker);
-
-      originMarker = L.circleMarker([origin.lat, origin.lng], {
-        radius: 9,
-        color: '#a7f3d0',
-        weight: 3,
-        fillColor: '#10b981',
-        fillOpacity: 0.95
-      }).addTo(map).bindPopup(`起點：${escapeHtml(origin.name)}`);
-
-      destinationMarker = L.circleMarker([destination.lat, destination.lng], {
-        radius: 9,
-        color: '#bfdbfe',
-        weight: 3,
-        fillColor: '#3b82f6',
-        fillOpacity: 0.95
-      }).addTo(map).bindPopup(`終點：${escapeHtml(destination.name)}`);
-
-      contextLayer = L.layerGroup([
-        L.marker([via.lat, via.lng]).bindPopup(`策略中繼點：${strategy.title}`)
-      ]).addTo(map);
-
-      const bounds = L.latLngBounds([ [origin.lat, origin.lng], [destination.lat, destination.lng], [via.lat, via.lng] ]);
-      map.fitBounds(bounds.pad(0.18));
-    }
-
-    function escapeHtml(text) {
-      return String(text)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
-    }
-
     function renderStrategyCards(options, best) {
-      cardsEl.innerHTML = options.map(o => `
+      els.strategyCards.innerHTML = options.map(o => `
         <div class="card ${o.key === best.key ? 'active' : ''}">
           <div class="card-top">
             <strong>${o.title}</strong>
-            <span class="badge ${o.key === 'comfort' ? 'good' : o.key === 'balanced' ? 'warn' : ''}">${o.badge}</span>
+            <span class="badge ${o.badgeClass || ''}">${o.badge}</span>
           </div>
           <div class="card-top" style="margin-bottom:0;">
             <span style="color:#cfe3ff;font-size:13px;">評分：${o.score.toFixed(1)}</span>
@@ -831,77 +836,323 @@
       `).join('');
     }
 
-    function updateRouteSummary(origin, destination, context, best, distance) {
-      routeLengthEl.textContent = `距離：${distance.toFixed(2)} km`;
-      routeScoreEl.textContent = `分數：${best.score.toFixed(1)}`;
-      explainBox.innerHTML = `
+    function updateRouteInfo(distance, best, weather, selectedTime, crowd, mode) {
+      els.routeLength.textContent = `距離：${distance.toFixed(2)} km`;
+      els.routeScore.textContent = `分數：${best.score.toFixed(1)}`;
+      els.explainBox.innerHTML = `
         <strong>${best.title}</strong><br>
-        因為目前條件是 <strong>${weatherLabel(context.weather)}</strong>、<strong>${context.selectedTime}</strong>、
-        <strong>${crowdLabel(context.crowd)} 人流</strong>，系統目前偏向選擇 <strong>${modeLabel(modeSelect.value)}</strong> 情境下的
+        因為目前條件是 <strong>${weatherLabel(weather)}</strong>、<strong>${selectedTime}</strong>、
+        <strong>${crowdLabel(crowd)} 人流</strong>，系統目前偏向選擇 <strong>${modeLabel(mode)}</strong> 情境下的
         <strong>${best.title}</strong> 路線。<br><br>
-        這一版先用可解釋的權重模型示範；下一步可以把權重來源換成 <strong>TDX</strong> 的交通資料，
-        再搭配 <strong>台北資料大平台</strong> 的區域資訊做更細的策略判斷。
+        這版已經可以自由搜尋任意地點，之後再把天氣、交通壅塞與人流改成 TDX / 台北資料大平臺的 API，就能變成真正的即時決策系統。
       `;
     }
 
-    function getPlace(name) {
-      return places[name?.trim()];
+    function drawRoute(a, b, weather, crowd, mode, best) {
+      if (routeLayer) map.removeLayer(routeLayer);
+      if (contextLayer) map.removeLayer(contextLayer);
+      if (originMarker) map.removeLayer(originMarker);
+      if (destinationMarker) map.removeLayer(destinationMarker);
+
+      const via = midpointWithOffset(a, b, weather, crowd, mode);
+      const color = best.key === 'comfort' ? '#34d399' : best.key === 'balanced' ? '#f59e0b' : '#60a5fa';
+      routeLayer = L.polyline([
+        [a.lat, a.lng],
+        [via.lat, via.lng],
+        [b.lat, b.lng]
+      ], {
+        color,
+        weight: 5,
+        opacity: 0.9,
+        lineCap: 'round'
+      }).addTo(map);
+
+      originMarker = L.circleMarker([a.lat, a.lng], {
+        radius: 9,
+        color: '#a7f3d0',
+        weight: 3,
+        fillColor: '#10b981',
+        fillOpacity: 0.95
+      }).addTo(map).bindPopup(`起點：${escapeHtml(a.name)}`);
+
+      destinationMarker = L.circleMarker([b.lat, b.lng], {
+        radius: 9,
+        color: '#bfdbfe',
+        weight: 3,
+        fillColor: '#3b82f6',
+        fillOpacity: 0.95
+      }).addTo(map).bindPopup(`終點：${escapeHtml(b.name)}`);
+
+      contextLayer = L.layerGroup([
+        L.marker([via.lat, via.lng]).bindPopup(`策略中繼點：${best.title}`)
+      ]).addTo(map);
+
+      const bounds = L.latLngBounds([[a.lat, a.lng], [b.lat, b.lng], [via.lat, via.lng]]);
+      map.fitBounds(bounds.pad(0.18));
     }
 
-    function run() {
+    async function nominatimSearch(query) {
+      const url = new URL('https://nominatim.openstreetmap.org/search');
+      url.searchParams.set('format', 'jsonv2');
+      url.searchParams.set('q', query);
+      url.searchParams.set('countrycodes', 'tw');
+      url.searchParams.set('viewbox', taipeiViewbox);
+      url.searchParams.set('bounded', '1');
+      url.searchParams.set('limit', '6');
+      url.searchParams.set('addressdetails', '1');
+
+      const res = await fetch(url.toString(), {
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      if (!res.ok) throw new Error('地點搜尋失敗');
+      return res.json();
+    }
+
+    async function nominatimReverse(lat, lng) {
+      const url = new URL('https://nominatim.openstreetmap.org/reverse');
+      url.searchParams.set('format', 'jsonv2');
+      url.searchParams.set('lat', lat);
+      url.searchParams.set('lon', lng);
+      url.searchParams.set('zoom', '18');
+      url.searchParams.set('addressdetails', '1');
+
+      const res = await fetch(url.toString(), {
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      if (!res.ok) throw new Error('反查地址失敗');
+      return res.json();
+    }
+
+    function renderSuggestions(field, items) {
+      const box = field === 'origin' ? els.originSuggestions : els.destinationSuggestions;
+      if (!items.length) {
+        box.style.display = 'none';
+        box.innerHTML = '';
+        return;
+      }
+      box.style.display = 'block';
+      box.innerHTML = items.map((item, idx) => `
+        <div class="suggestion" data-idx="${idx}">
+          <div class="name">${escapeHtml(item.display_name)}</div>
+          <div class="meta">${item.class || ''} ${item.type || ''} · ${Number(item.lat).toFixed(5)}, ${Number(item.lon).toFixed(5)}</div>
+        </div>
+      `).join('');
+
+      [...box.querySelectorAll('.suggestion')].forEach(el => {
+        el.addEventListener('click', () => {
+          const item = items[Number(el.dataset.idx)];
+          selectPlace(field, {
+            name: item.display_name,
+            lat: Number(item.lat),
+            lng: Number(item.lon)
+          });
+          box.style.display = 'none';
+        });
+      });
+    }
+
+    function updateSelectionText(field) {
+      const target = field === 'origin' ? els.originSelection : els.destinationSelection;
+      const data = field === 'origin' ? origin : destination;
+      if (!data) {
+        target.textContent = field === 'origin' ? '尚未選擇起點' : '尚未選擇終點';
+        return;
+      }
+      target.innerHTML = `<strong>${field === 'origin' ? '起點' : '終點'}：</strong>${escapeHtml(data.name)}<br><span style="color:#9fb2cc;">${data.lat.toFixed(6)}, ${data.lng.toFixed(6)}</span>`;
+    }
+
+    function selectPlace(field, place) {
+      if (field === 'origin') {
+        origin = place;
+        els.originQuery.value = place.name;
+      } else {
+        destination = place;
+        els.destinationQuery.value = place.name;
+      }
+      updateSelectionText(field);
       setError('');
-      const originName = originInput.value.trim();
-      const destinationName = destinationInput.value.trim();
-      const origin = getPlace(originName);
-      const destination = getPlace(destinationName);
+    }
+
+    async function doSearch(field, query) {
+      const requestId = ++currentRequestId[field];
+      if (query.trim().length < 2) {
+        renderSuggestions(field, []);
+        return;
+      }
+      try {
+        const results = await nominatimSearch(query.trim());
+        if (requestId !== currentRequestId[field]) return;
+        renderSuggestions(field, results.map(r => ({
+          display_name: r.display_name,
+          lat: r.lat,
+          lon: r.lon,
+          class: r.class,
+          type: r.type
+        })));
+      } catch (err) {
+        renderSuggestions(field, []);
+      }
+    }
+
+    function hideSuggestions(field) {
+      const box = field === 'origin' ? els.originSuggestions : els.destinationSuggestions;
+      box.style.display = 'none';
+    }
+
+    function getContext() {
+      const now = getNowParts();
+      const selectedTime = els.timeBias.value === 'auto' ? timeBand(now.hour) : els.timeBias.value;
+      const weather = els.weather.value === 'auto' ? autoWeatherByTime(now.hour) : els.weather.value;
+      const crowd = Number(els.crowd.value);
+      return { now, selectedTime, weather, crowd };
+    }
+
+    function calculateAndDraw() {
+      updateSummary();
+      const context = getContext();
 
       if (!origin || !destination) {
-        setError('第一版先支援地點清單中的台北地點。請從輸入框下拉建議中選一個已知地點，例如「台北車站」到「台北101/世貿站」。');
+        setError('請先透過搜尋或點地圖選好起點與終點。');
         return;
       }
 
-      const context = scenarioFromControls();
-      renderContextTags(context);
-
       const distance = distanceKm(origin, destination);
-      const strategies = scoreStrategies(distance, context.weather, context.crowd, modeSelect.value, context.selectedTime);
-      const best = selectBestStrategy(strategies, context.weather, context.crowd, context.selectedTime, modeSelect.value);
+      const strategies = scoreStrategies(distance, context.weather, context.crowd, els.mode.value, context.selectedTime);
+      const best = selectBestStrategy(strategies, context.weather, context.crowd, context.selectedTime, els.mode.value);
 
       renderStrategyCards(strategies, best);
-      drawRoute({ ...origin, name: originName }, { ...destination, name: destinationName }, context, best);
-      updateRouteSummary(origin, destination, context, best, distance);
+      drawRoute(origin, destination, context.weather, context.crowd, els.mode.value, best);
+      updateRouteInfo(distance, best, context.weather, context.selectedTime, context.crowd, els.mode.value);
     }
 
-    function autoRefreshTime() {
-      const context = scenarioFromControls();
-      renderContextTags(context);
+    async function setFromMapClick(latlng) {
+      const placeName = await (async () => {
+        try {
+          const data = await nominatimReverse(latlng.lat, latlng.lng);
+          return data.display_name || '地圖點位';
+        } catch {
+          return '地圖點位';
+        }
+      })();
+
+      const place = {
+        name: placeName,
+        lat: latlng.lat,
+        lng: latlng.lng
+      };
+      selectPlace(activePick, place);
+      calculateAndDraw();
     }
 
-    function resetAll() {
-      originInput.value = '台北車站';
-      destinationInput.value = '台北101/世貿站';
-      weatherSelect.value = 'auto';
-      modeSelect.value = 'walk';
-      crowdSlider.value = 58;
-      timeBiasSelect.value = 'auto';
-      setError('');
-      run();
-    }
-
-    runBtn.addEventListener('click', run);
-    resetBtn.addEventListener('click', resetAll);
-    [originInput, destinationInput, weatherSelect, modeSelect, crowdSlider, timeBiasSelect].forEach(el => {
-      el.addEventListener('change', autoRefreshTime);
-      el.addEventListener('input', autoRefreshTime);
+    els.originQuery.addEventListener('input', () => {
+      clearTimeout(debounceTimers.origin);
+      debounceTimers.origin = setTimeout(() => doSearch('origin', els.originQuery.value), 280);
     });
 
-    setInterval(() => {
-      if (timeBiasSelect.value === 'auto' || weatherSelect.value === 'auto') {
-        autoRefreshTime();
-      }
-    }, 1000 * 30);
+    els.destinationQuery.addEventListener('input', () => {
+      clearTimeout(debounceTimers.destination);
+      debounceTimers.destination = setTimeout(() => doSearch('destination', els.destinationQuery.value), 280);
+    });
 
-    resetAll();
+    els.originQuery.addEventListener('focus', () => {
+      activePick = 'origin';
+      els.pickOriginBtn.classList.add('selected');
+      els.pickDestinationBtn.classList.remove('selected');
+      if (els.originSuggestions.innerHTML.trim()) els.originSuggestions.style.display = 'block';
+    });
+
+    els.destinationQuery.addEventListener('focus', () => {
+      activePick = 'destination';
+      els.pickDestinationBtn.classList.add('selected');
+      els.pickOriginBtn.classList.remove('selected');
+      if (els.destinationSuggestions.innerHTML.trim()) els.destinationSuggestions.style.display = 'block';
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.search-wrap')) {
+        hideSuggestions('origin');
+        hideSuggestions('destination');
+      }
+    });
+
+    els.pickOriginBtn.addEventListener('click', () => {
+      activePick = 'origin';
+      els.pickOriginBtn.classList.add('selected');
+      els.pickDestinationBtn.classList.remove('selected');
+    });
+
+    els.pickDestinationBtn.addEventListener('click', () => {
+      activePick = 'destination';
+      els.pickDestinationBtn.classList.add('selected');
+      els.pickOriginBtn.classList.remove('selected');
+    });
+
+    els.clearBtn.addEventListener('click', () => {
+      origin = null;
+      destination = null;
+      els.originQuery.value = '';
+      els.destinationQuery.value = '';
+      els.originSelection.textContent = '尚未選擇起點';
+      els.destinationSelection.textContent = '尚未選擇終點';
+      els.strategyCards.innerHTML = '';
+      els.explainBox.textContent = '選好起點與終點後，這裡會顯示策略理由。';
+      els.routeLength.textContent = '距離：-- km';
+      els.routeScore.textContent = '分數：--';
+      setError('');
+      if (routeLayer) map.removeLayer(routeLayer);
+      if (contextLayer) map.removeLayer(contextLayer);
+      if (originMarker) map.removeLayer(originMarker);
+      if (destinationMarker) map.removeLayer(destinationMarker);
+    });
+
+    els.runBtn.addEventListener('click', calculateAndDraw);
+    els.resetBtn.addEventListener('click', () => {
+      els.weather.value = 'auto';
+      els.mode.value = 'walk';
+      els.crowd.value = 58;
+      els.timeBias.value = 'auto';
+      els.clearBtn.click();
+      updateSummary();
+    });
+
+    [els.weather, els.mode, els.crowd, els.timeBias].forEach(el => {
+      el.addEventListener('input', updateSummary);
+      el.addEventListener('change', updateSummary);
+    });
+
+    map.on('click', (e) => {
+      setFromMapClick(e.latlng);
+    });
+
+    updateSummary();
+    setInterval(() => {
+      if (els.weather.value === 'auto' || els.timeBias.value === 'auto') updateSummary();
+    }, 30000);
+
+    // 預設示範兩個常見地點，方便你一打開就能展示
+    (async () => {
+      try {
+        const start = await nominatimSearch('台北車站');
+        if (start[0]) selectPlace('origin', {
+          name: start[0].display_name,
+          lat: Number(start[0].lat),
+          lng: Number(start[0].lon)
+        });
+        const end = await nominatimSearch('台北101');
+        if (end[0]) selectPlace('destination', {
+          name: end[0].display_name,
+          lat: Number(end[0].lat),
+          lng: Number(end[0].lon)
+        });
+        calculateAndDraw();
+      } catch {
+        // ignore
+      }
+    })();
   </script>
 </body>
 </html>
