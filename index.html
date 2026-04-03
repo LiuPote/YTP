@@ -33,11 +33,7 @@
       color: var(--text);
     }
 
-    .app {
-      min-height: 100vh;
-      display: grid;
-      grid-template-rows: auto 1fr;
-    }
+    .app { min-height: 100vh; display: grid; grid-template-rows: auto 1fr; }
 
     header {
       padding: 20px 24px 12px;
@@ -49,97 +45,21 @@
       z-index: 10;
     }
 
-    .title-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
+    .title-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+    h1 { margin: 0; font-size: clamp(24px, 3vw, 34px); letter-spacing: .02em; }
+    .subtitle { margin-top: 6px; color: var(--muted); font-size: 14px; max-width: 980px; line-height: 1.6; }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill { padding: 8px 12px; border: 1px solid var(--line); background: rgba(255,255,255,.04); border-radius: 999px; font-size: 13px; color: #d8e4f4; }
 
-    h1 {
-      margin: 0;
-      font-size: clamp(24px, 3vw, 34px);
-      letter-spacing: .02em;
-    }
-
-    .subtitle {
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 14px;
-      max-width: 980px;
-      line-height: 1.6;
-    }
-
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .pill {
-      padding: 8px 12px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      border-radius: 999px;
-      font-size: 13px;
-      color: #d8e4f4;
-    }
-
-    main {
-      display: grid;
-      grid-template-columns: 420px 1fr;
-      gap: 18px;
-      padding: 18px;
-      min-height: 0;
-    }
-
-    .sidebar,
-    .stage {
-      min-height: 0;
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      background: var(--panel);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .sidebar {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .sidebar .content {
-      padding: 18px;
-      overflow: auto;
-    }
-
-    .section {
-      margin-bottom: 18px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid var(--line);
-    }
-
+    main { display: grid; grid-template-columns: 420px 1fr; gap: 18px; padding: 18px; min-height: 0; }
+    .sidebar, .stage { min-height: 0; border: 1px solid var(--line); border-radius: 22px; background: var(--panel); box-shadow: var(--shadow); overflow: hidden; }
+    .sidebar { display: flex; flex-direction: column; }
+    .sidebar .content { padding: 18px; overflow: auto; }
+    .section { margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
     .section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-
-    .section h2 {
-      margin: 0 0 10px;
-      font-size: 16px;
-      letter-spacing: .01em;
-    }
-
-    label {
-      display: block;
-      font-size: 13px;
-      color: var(--muted);
-      margin: 10px 0 6px;
-    }
-
-    input, select, button, textarea {
-      width: 100%;
-      font: inherit;
-    }
-
+    .section h2 { margin: 0 0 10px; font-size: 16px; letter-spacing: .01em; }
+    label { display: block; font-size: 13px; color: var(--muted); margin: 10px 0 6px; }
+    input, select, button, textarea { width: 100%; font: inherit; }
     input, select, textarea {
       border: 1px solid rgba(148,163,184,.22);
       background: rgba(15,23,42,.96);
@@ -149,267 +69,60 @@
       outline: none;
       transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
     }
-
-    input:focus, select:focus, textarea:focus {
-      border-color: rgba(96,165,250,.68);
-      box-shadow: 0 0 0 4px rgba(96,165,250,.12);
-    }
-
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .buttons {
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
+    input:focus, select:focus, textarea:focus { border-color: rgba(96,165,250,.68); box-shadow: 0 0 0 4px rgba(96,165,250,.12); }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .buttons { display: grid; grid-template-columns: 1.2fr .8fr; gap: 10px; margin-top: 12px; }
     button {
-      border: 0;
-      border-radius: 14px;
-      padding: 12px 14px;
-      color: #06101e;
-      font-weight: 700;
-      cursor: pointer;
+      border: 0; border-radius: 14px; padding: 12px 14px; color: #06101e; font-weight: 700; cursor: pointer;
       transition: transform .16s ease, filter .16s ease;
     }
-
     button:hover { transform: translateY(-1px); filter: brightness(1.02); }
     button.primary { background: linear-gradient(135deg, #60a5fa, #34d399); }
-    button.ghost {
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      border: 1px solid rgba(148,163,184,.2);
-    }
-
-    .hint {
-      margin-top: 8px;
-      color: #8fa5bf;
-      font-size: 12px;
-      line-height: 1.55;
-    }
-
+    button.ghost { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid rgba(148,163,184,.2); }
+    .hint { margin-top: 8px; color: #8fa5bf; font-size: 12px; line-height: 1.55; }
     .error {
-      display: none;
-      margin-top: 10px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: rgba(248,113,113,.12);
-      color: #fecaca;
-      border: 1px solid rgba(248,113,113,.28);
-      font-size: 13px;
-      line-height: 1.5;
+      display: none; margin-top: 10px; padding: 10px 12px; border-radius: 12px; background: rgba(248,113,113,.12);
+      color: #fecaca; border: 1px solid rgba(248,113,113,.28); font-size: 13px; line-height: 1.5;
     }
-
-    .search-wrap {
-      position: relative;
-    }
-
+    .search-wrap { position: relative; }
     .suggestions {
-      position: absolute;
-      top: calc(100% + 6px);
-      left: 0;
-      right: 0;
-      background: #0f172a;
-      border: 1px solid rgba(148,163,184,.22);
-      border-radius: 14px;
-      box-shadow: 0 18px 45px rgba(0,0,0,.35);
-      overflow: hidden;
-      z-index: 30;
-      display: none;
-      max-height: 280px;
-      overflow-y: auto;
+      position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: #0f172a; border: 1px solid rgba(148,163,184,.22);
+      border-radius: 14px; box-shadow: 0 18px 45px rgba(0,0,0,.35); overflow: hidden; z-index: 30; display: none; max-height: 280px; overflow-y: auto;
     }
-
-    .suggestion {
-      padding: 10px 12px;
-      border-bottom: 1px solid rgba(148,163,184,.12);
-      cursor: pointer;
-      transition: background .15s ease;
-    }
-
+    .suggestion { padding: 10px 12px; border-bottom: 1px solid rgba(148,163,184,.12); cursor: pointer; transition: background .15s ease; }
     .suggestion:last-child { border-bottom: none; }
     .suggestion:hover { background: rgba(96,165,250,.12); }
     .suggestion .name { font-size: 14px; color: #eaf2ff; line-height: 1.45; }
     .suggestion .meta { font-size: 12px; color: #94a3b8; margin-top: 4px; }
-
-    .selection {
-      margin-top: 8px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(148,163,184,.16);
-      background: rgba(255,255,255,.03);
-      color: #dbeafe;
-      font-size: 13px;
-      line-height: 1.5;
-      min-height: 44px;
-    }
-
-    .metrics {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .metric {
-      padding: 12px;
-      border: 1px solid rgba(148,163,184,.18);
-      border-radius: 16px;
-      background: rgba(255,255,255,.03);
-    }
-
-    .metric .k {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .metric .v {
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    .cards {
-      display: grid;
-      gap: 10px;
-    }
-
-    .card {
-      border: 1px solid rgba(148,163,184,.18);
-      border-radius: 18px;
-      background: rgba(255,255,255,.03);
-      padding: 14px;
-    }
-
-    .card.active {
-      border-color: rgba(96,165,250,.5);
-      background: linear-gradient(180deg, rgba(96,165,250,.13), rgba(255,255,255,.03));
-    }
-
-    .card-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      background: rgba(96, 165, 250, 0.12);
-      color: #cfe3ff;
-    }
-
+    .selection { margin-top: 8px; padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(148,163,184,.16); background: rgba(255,255,255,.03); color: #dbeafe; font-size: 13px; line-height: 1.5; min-height: 44px; }
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .metric { padding: 12px; border: 1px solid rgba(148,163,184,.18); border-radius: 16px; background: rgba(255,255,255,.03); }
+    .metric .k { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    .metric .v { font-size: 18px; font-weight: 700; }
+    .cards { display: grid; gap: 10px; }
+    .card { border: 1px solid rgba(148,163,184,.18); border-radius: 18px; background: rgba(255,255,255,.03); padding: 14px; }
+    .card.active { border-color: rgba(96,165,250,.5); background: linear-gradient(180deg, rgba(96,165,250,.13), rgba(255,255,255,.03)); }
+    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; font-size: 12px; background: rgba(96, 165, 250, 0.12); color: #cfe3ff; }
     .badge.good { background: rgba(52,211,153,.14); }
     .badge.warn { background: rgba(245,158,11,.16); }
-
-    .card p {
-      margin: 6px 0 0;
-      color: #d8e4f4;
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .explain {
-      margin-top: 12px;
-      padding: 14px;
-      border-radius: 16px;
-      background: rgba(6, 15, 30, .55);
-      border: 1px solid rgba(148,163,184,.18);
-      color: #dbeafe;
-      line-height: 1.7;
-      font-size: 14px;
-    }
-
-    .map-wrap {
-      height: 100%;
-      display: grid;
-      grid-template-rows: auto 1fr;
-    }
-
-    .map-head {
-      padding: 16px 18px;
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      background: rgba(255,255,255,.03);
-      flex-wrap: wrap;
-    }
-
-    .map-head .left {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .map-head .title {
-      font-weight: 700;
-      font-size: 15px;
-    }
-
-    .map-head .small {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    #map {
-      min-height: 600px;
-      height: 100%;
-      width: 100%;
-      background: #101827;
-    }
-
-    .footer-note {
-      margin-top: 12px;
-      color: #95a9c3;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .mini-chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .mini-chip {
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,.2);
-      background: rgba(255,255,255,.03);
-      font-size: 12px;
-      color: #d7e4f5;
-    }
-
-    .map-tools {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
-    .map-tools button {
-      width: auto;
-      padding: 9px 12px;
-      font-size: 12px;
-    }
-
-    .map-tools button.selected {
-      background: linear-gradient(135deg, #60a5fa, #34d399);
-      color: #05111f;
-    }
+    .card p { margin: 6px 0 0; color: #d8e4f4; font-size: 14px; line-height: 1.55; }
+    .explain { margin-top: 12px; padding: 14px; border-radius: 16px; background: rgba(6, 15, 30, .55); border: 1px solid rgba(148,163,184,.18); color: #dbeafe; line-height: 1.7; font-size: 14px; }
+    .map-wrap { height: 100%; display: grid; grid-template-rows: auto 1fr; }
+    .map-head { padding: 16px 18px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 12px; background: rgba(255,255,255,.03); flex-wrap: wrap; }
+    .map-head .left { display: flex; flex-direction: column; gap: 4px; }
+    .map-head .title { font-weight: 700; font-size: 15px; }
+    .map-head .small { font-size: 12px; color: var(--muted); }
+    #map { min-height: 600px; height: 100%; width: 100%; background: #101827; }
+    .footer-note { margin-top: 12px; color: #95a9c3; font-size: 12px; line-height: 1.5; }
+    .mini-chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .mini-chip { padding: 7px 10px; border-radius: 999px; border: 1px solid rgba(148,163,184,.2); background: rgba(255,255,255,.03); font-size: 12px; color: #d7e4f5; }
+    .map-tools { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .map-tools button { width: auto; padding: 9px 12px; font-size: 12px; }
+    .map-tools button.selected { background: linear-gradient(135deg, #60a5fa, #34d399); color: #05111f; }
+    .api-key-box { display: grid; gap: 8px; }
+    .api-key-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
+    .api-key-row button { width: auto; padding: 12px 14px; }
 
     @media (max-width: 1100px) {
       main { grid-template-columns: 1fr; }
@@ -424,14 +137,14 @@
         <div>
           <h1>台北即時動態路徑 Prototype</h1>
           <div class="subtitle">
-            這版使用網路地圖與地名搜尋：底圖來自 OpenStreetMap，地點由 Nominatim 轉成座標；之後可再把 TDX 與台北資料大平臺的即時資料接進來。
+            底圖來自 OpenStreetMap，地點搜尋透過 Nominatim；Gemini 會負責把「時間、天氣、人流、交通」轉成策略判斷與解釋。
           </div>
         </div>
         <div class="pill-row">
           <span class="pill">OSM 地圖</span>
           <span class="pill">Nominatim 搜尋</span>
+          <span class="pill">Gemini 決策</span>
           <span class="pill">台北市範圍</span>
-          <span class="pill">可點圖選點</span>
         </div>
       </div>
     </header>
@@ -440,28 +153,40 @@
       <aside class="sidebar">
         <div class="content">
           <div class="section">
-            <h2>選擇起點 / 終點</h2>
+            <h2>Gemini API Key</h2>
+            <div class="api-key-box">
+              <div class="hint">把新的 API Key 貼在這裡即可。它只會存在你的瀏覽器本機，不會寫進程式碼。</div>
+              <div class="api-key-row">
+                <input id="apiKeyInput" type="password" placeholder="貼上你的 Gemini API Key" autocomplete="off" />
+                <button class="ghost" id="saveKeyBtn">儲存</button>
+              </div>
+              <div class="map-tools">
+                <button class="ghost" id="testGeminiBtn">測試 Gemini</button>
+                <button class="ghost" id="clearKeyBtn">清除</button>
+              </div>
+              <div class="hint">官方文件說明 Gemini API 可用 API key，REST 呼叫時需帶 `x-goog-api-key` header；初期測試可暫時硬寫，但不安全。([ai.google.dev](https://ai.google.dev/gemini-api/docs/api-key?utm_source=chatgpt.com))</div>
+            </div>
+          </div>
 
+          <div class="section">
+            <h2>選擇起點 / 終點</h2>
             <div class="map-tools">
               <button class="selected" id="pickOriginBtn">點選起點</button>
               <button class="ghost" id="pickDestinationBtn">點選終點</button>
               <button class="ghost" id="clearBtn">清除地點</button>
             </div>
-
             <label for="originQuery">起點搜尋</label>
             <div class="search-wrap">
               <input id="originQuery" placeholder="輸入台北市內地點、地址或地標，例如：台北車站" autocomplete="off" />
               <div class="suggestions" id="originSuggestions"></div>
             </div>
             <div class="selection" id="originSelection">尚未選擇起點</div>
-
             <label for="destinationQuery">終點搜尋</label>
             <div class="search-wrap">
               <input id="destinationQuery" placeholder="輸入台北市內地點、地址或地標，例如：台北101" autocomplete="off" />
               <div class="suggestions" id="destinationSuggestions"></div>
             </div>
             <div class="selection" id="destinationSelection">尚未選擇終點</div>
-
             <div class="hint">你可以直接打地名、地址、商家或景點，從網路搜尋後選一個結果。也可以先按「點選起點／終點」再直接點地圖。</div>
             <div class="error" id="errorBox"></div>
           </div>
@@ -513,18 +238,9 @@
           <div class="section">
             <h2>即時摘要</h2>
             <div class="metrics">
-              <div class="metric">
-                <div class="k">目前時間</div>
-                <div class="v" id="currentTime">--:--</div>
-              </div>
-              <div class="metric">
-                <div class="k">天氣</div>
-                <div class="v" id="currentWeather">--</div>
-              </div>
-              <div class="metric">
-                <div class="k">人流</div>
-                <div class="v" id="currentCrowd">--</div>
-              </div>
+              <div class="metric"><div class="k">目前時間</div><div class="v" id="currentTime">--:--</div></div>
+              <div class="metric"><div class="k">天氣</div><div class="v" id="currentWeather">--</div></div>
+              <div class="metric"><div class="k">人流</div><div class="v" id="currentCrowd">--</div></div>
             </div>
             <div class="mini-chip-row" id="contextTags"></div>
           </div>
@@ -538,7 +254,7 @@
           <div class="section">
             <h2>第一版說明</h2>
             <div class="footer-note">
-              這版的重點是：任意搜尋台北市內地點、把點精準放到地圖上、再根據情境切換路線策略。下一步可把天氣、交通壅塞與人流改成 TDX / 台北資料大平臺的 API。
+              這版先把「可任意搜尋台北市地點 + Gemini 決策 + 真地圖」做出來。下一步可以把天氣、交通壅塞與人流改成 TDX / 台北資料大平臺的資料。
             </div>
           </div>
         </div>
@@ -564,11 +280,9 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
-    const taipeiBounds = [
-      [24.96, 121.46],
-      [25.22, 121.66]
-    ];
-    const taipeiViewbox = "121.46,25.22,121.66,24.96"; // left,top,right,bottom
+    const taipeiBounds = [[24.96, 121.46], [25.22, 121.66]];
+    const taipeiViewbox = "121.46,25.22,121.66,24.96";
+    const GEMINI_MODEL = "gemini-3-flash-preview";
 
     const map = L.map('map', {
       zoomControl: true,
@@ -585,28 +299,21 @@
       bounds: taipeiBounds
     }).addTo(map);
 
-    // 遮罩：把台北市外圍蓋起來
     const maskPane = map.createPane('taipeiMaskPane');
     maskPane.style.zIndex = 410;
-    const maskStyle = {
-      stroke: false,
-      fillColor: '#09101b',
-      fillOpacity: 0.92,
-      interactive: false,
-      pane: 'taipeiMaskPane'
-    };
+    const maskStyle = { stroke: false, fillColor: '#09101b', fillOpacity: 0.92, interactive: false, pane: 'taipeiMaskPane' };
     L.rectangle([[90, -180], [24.96, 180]], maskStyle).addTo(map);
     L.rectangle([[24.96, -180], [25.22, 121.46]], maskStyle).addTo(map);
     L.rectangle([[24.96, 121.66], [25.22, 180]], maskStyle).addTo(map);
     L.rectangle([[25.22, -180], [90, 180]], maskStyle).addTo(map);
-    L.rectangle(taipeiBounds, {
-      color: '#60a5fa',
-      weight: 2,
-      fill: false
-    }).addTo(map);
+    L.rectangle(taipeiBounds, { color: '#60a5fa', weight: 2, fill: false }).addTo(map);
     map.fitBounds(taipeiBounds);
 
     const els = {
+      apiKeyInput: document.getElementById('apiKeyInput'),
+      saveKeyBtn: document.getElementById('saveKeyBtn'),
+      clearKeyBtn: document.getElementById('clearKeyBtn'),
+      testGeminiBtn: document.getElementById('testGeminiBtn'),
       originQuery: document.getElementById('originQuery'),
       destinationQuery: document.getElementById('destinationQuery'),
       originSuggestions: document.getElementById('originSuggestions'),
@@ -633,73 +340,34 @@
       routeScore: document.getElementById('routeScore')
     };
 
-    let origin = null;
-    let destination = null;
-    let originMarker = null;
-    let destinationMarker = null;
-    let routeLayer = null;
-    let contextLayer = null;
+    let origin = null, destination = null;
+    let originMarker = null, destinationMarker = null, routeLayer = null, contextLayer = null;
     let activePick = 'origin';
     let debounceTimers = { origin: null, destination: null };
     let currentRequestId = { origin: 0, destination: 0 };
 
+    const localKeyName = 'gemini_api_key_taipei_route';
+    els.apiKeyInput.value = localStorage.getItem(localKeyName) || '';
+
     function setError(msg) {
-      if (!msg) {
-        els.errorBox.style.display = 'none';
-        els.errorBox.textContent = '';
-        return;
-      }
-      els.errorBox.textContent = msg;
-      els.errorBox.style.display = 'block';
+      if (!msg) { els.errorBox.style.display = 'none'; els.errorBox.textContent = ''; return; }
+      els.errorBox.textContent = msg; els.errorBox.style.display = 'block';
     }
 
     function escapeHtml(text) {
-      return String(text)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
+      return String(text).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
     }
 
     function getNowParts() {
       const d = new Date();
-      return {
-        hour: d.getHours(),
-        label: d.toLocaleString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false })
-      };
+      return { hour: d.getHours(), label: d.toLocaleString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false }) };
     }
-
-    function autoWeatherByTime(hour) {
-      if (hour >= 18 || hour <= 5) return 'rain';
-      if (hour >= 11 && hour <= 15) return 'hot';
-      return 'sunny';
-    }
-
-    function timeBand(hour) {
-      if (hour >= 6 && hour < 11) return 'morning';
-      if (hour >= 11 && hour < 17) return 'afternoon';
-      if (hour >= 17 && hour < 22) return 'evening';
-      return 'late';
-    }
-
-    function weatherLabel(v) {
-      return ({ auto: '自動', sunny: '晴天', rain: '下雨', hot: '炎熱', fog: '低能見度' })[v] || v;
-    }
-
-    function weatherIcon(v) {
-      return ({ sunny: '☀️', rain: '🌧️', hot: '🥵', fog: '🌫️' })[v] || '🌤️';
-    }
-
-    function modeLabel(v) {
-      return ({ walk: '步行', drive: '車輛', metro: '大眾運輸' })[v] || v;
-    }
-
-    function crowdLabel(score) {
-      if (score < 34) return '低';
-      if (score < 67) return '中';
-      return '高';
-    }
+    function autoWeatherByTime(hour) { if (hour >= 18 || hour <= 5) return 'rain'; if (hour >= 11 && hour <= 15) return 'hot'; return 'sunny'; }
+    function timeBand(hour) { if (hour >= 6 && hour < 11) return 'morning'; if (hour < 17) return 'afternoon'; if (hour < 22) return 'evening'; return 'late'; }
+    function weatherLabel(v) { return ({ auto: '自動', sunny: '晴天', rain: '下雨', hot: '炎熱', fog: '低能見度' })[v] || v; }
+    function weatherIcon(v) { return ({ sunny: '☀️', rain: '🌧️', hot: '🥵', fog: '🌫️' })[v] || '🌤️'; }
+    function modeLabel(v) { return ({ walk: '步行', drive: '車輛', metro: '大眾運輸' })[v] || v; }
+    function crowdLabel(score) { if (score < 34) return '低'; if (score < 67) return '中'; return '高'; }
 
     function distanceKm(a, b) {
       const R = 6371;
@@ -714,8 +382,7 @@
 
     function midpointWithOffset(a, b, weather, crowd, mode) {
       const mid = { lat: (a.lat + b.lat) / 2, lng: (a.lng + b.lng) / 2 };
-      let latShift = 0;
-      let lngShift = 0;
+      let latShift = 0, lngShift = 0;
       if (weather === 'rain') latShift += 0.006;
       if (weather === 'hot') lngShift += 0.004;
       if (weather === 'fog') latShift += 0.003;
@@ -725,97 +392,48 @@
       return { lat: mid.lat + latShift, lng: mid.lng + lngShift };
     }
 
-    function updateSummary() {
+    function getContext() {
       const now = getNowParts();
       const selectedTime = els.timeBias.value === 'auto' ? timeBand(now.hour) : els.timeBias.value;
       const weather = els.weather.value === 'auto' ? autoWeatherByTime(now.hour) : els.weather.value;
       const crowd = Number(els.crowd.value);
+      return { now, selectedTime, weather, crowd };
+    }
 
-      els.currentTime.textContent = now.label;
-      els.currentWeather.textContent = `${weatherIcon(weather)} ${weatherLabel(weather)}`;
-      els.currentCrowd.textContent = crowdLabel(crowd);
-      els.contextTags.innerHTML = [
-        `時間：${now.label}`,
-        `時段：${selectedTime}`,
-        `天氣：${weatherLabel(weather)}`,
-        `模式：${modeLabel(els.mode.value)}`,
-        `人流：${crowdLabel(crowd)}`
-      ].map(t => `<span class="mini-chip">${t}</span>`).join('');
+    function updateSummary() {
+      const c = getContext();
+      els.currentTime.textContent = c.now.label;
+      els.currentWeather.textContent = `${weatherIcon(c.weather)} ${weatherLabel(c.weather)}`;
+      els.currentCrowd.textContent = crowdLabel(c.crowd);
+      els.contextTags.innerHTML = [`時間：${c.now.label}`, `時段：${c.selectedTime}`, `天氣：${weatherLabel(c.weather)}`, `模式：${modeLabel(els.mode.value)}`, `人流：${crowdLabel(c.crowd)}`].map(t => `<span class="mini-chip">${t}</span>`).join('');
     }
 
     function scoreStrategies(distance, weather, crowd, mode, timeBandValue) {
       const baseFast = Math.max(5, 100 - distance * 9 - crowd * 0.25);
       const baseComfort = Math.max(5, 100 - distance * 7 - crowd * 0.15);
       const baseBalanced = Math.max(5, 100 - distance * 8 - crowd * 0.2);
-
-      let weatherPenaltyFast = 0;
-      let weatherPenaltyComfort = 0;
-      let weatherPenaltyBalanced = 0;
-
-      if (weather === 'rain') {
-        weatherPenaltyFast = 10;
-        weatherPenaltyComfort = 2;
-        weatherPenaltyBalanced = 5;
-      } else if (weather === 'hot') {
-        weatherPenaltyFast = 6;
-        weatherPenaltyComfort = 3;
-        weatherPenaltyBalanced = 4;
-      } else if (weather === 'fog') {
-        weatherPenaltyFast = 8;
-        weatherPenaltyComfort = 6;
-        weatherPenaltyBalanced = 7;
-      }
-
-      if (mode === 'metro') {
-        weatherPenaltyComfort -= 2;
-        weatherPenaltyBalanced -= 1;
-      }
-
-      if (timeBandValue === 'late') {
-        weatherPenaltyFast += 3;
-        weatherPenaltyComfort += 2;
-      }
-
+      let weatherPenaltyFast = 0, weatherPenaltyComfort = 0, weatherPenaltyBalanced = 0;
+      if (weather === 'rain') { weatherPenaltyFast = 10; weatherPenaltyComfort = 2; weatherPenaltyBalanced = 5; }
+      else if (weather === 'hot') { weatherPenaltyFast = 6; weatherPenaltyComfort = 3; weatherPenaltyBalanced = 4; }
+      else if (weather === 'fog') { weatherPenaltyFast = 8; weatherPenaltyComfort = 6; weatherPenaltyBalanced = 7; }
+      if (mode === 'metro') { weatherPenaltyComfort -= 2; weatherPenaltyBalanced -= 1; }
+      if (timeBandValue === 'late') { weatherPenaltyFast += 3; weatherPenaltyComfort += 2; }
       return [
-        {
-          key: 'fast',
-          title: '最快優先',
-          badge: '速度',
-          badgeClass: 'good',
-          score: baseFast - weatherPenaltyFast - (mode === 'walk' ? 2 : 0),
-          reason: '優先縮短預估時間，適合一般通勤與不想繞路的情境。'
-        },
-        {
-          key: 'balanced',
-          title: '速度 / 舒適平衡',
-          badge: '平衡',
-          badgeClass: 'warn',
-          score: baseBalanced - weatherPenaltyBalanced,
-          reason: '在時間、舒適與情境風險之間取得折衷。'
-        },
-        {
-          key: 'comfort',
-          title: '舒適優先',
-          badge: '舒適',
-          badgeClass: 'good',
-          score: baseComfort - weatherPenaltyComfort + (mode === 'metro' ? 6 : 0),
-          reason: '在雨天、晚間或人流較高時，偏向更安全或更穩定的路線。'
-        }
+        { key: 'fast', title: '最快優先', badge: '速度', badgeClass: 'good', score: baseFast - weatherPenaltyFast - (mode === 'walk' ? 2 : 0), reason: '優先縮短預估時間，適合一般通勤與不想繞路的情境。' },
+        { key: 'balanced', title: '速度 / 舒適平衡', badge: '平衡', badgeClass: 'warn', score: baseBalanced - weatherPenaltyBalanced, reason: '在時間、舒適與情境風險之間取得折衷。' },
+        { key: 'comfort', title: '舒適優先', badge: '舒適', badgeClass: 'good', score: baseComfort - weatherPenaltyComfort + (mode === 'metro' ? 6 : 0), reason: '在雨天、晚間或人流較高時，偏向更安全或更穩定的路線。' }
       ].sort((a, b) => b.score - a.score);
     }
 
     function selectBestStrategy(options, weather, crowd, timeBandValue, mode) {
       if (weather === 'rain' || weather === 'fog') {
-        const comfort = options.find(o => o.key === 'comfort');
-        if (comfort && comfort.score >= options[0].score - 8) return comfort;
+        const comfort = options.find(o => o.key === 'comfort'); if (comfort && comfort.score >= options[0].score - 8) return comfort;
       }
       if (crowd >= 70 && timeBandValue !== 'morning') {
-        const balanced = options.find(o => o.key === 'balanced');
-        if (balanced) return balanced;
+        const balanced = options.find(o => o.key === 'balanced'); if (balanced) return balanced;
       }
       if (mode === 'metro') {
-        const notFast = options.find(o => o.key !== 'fast');
-        if (notFast && notFast.score >= options[0].score - 5) return notFast;
+        const notFast = options.find(o => o.key !== 'fast'); if (notFast && notFast.score >= options[0].score - 5) return notFast;
       }
       return options[0];
     }
@@ -823,14 +441,8 @@
     function renderStrategyCards(options, best) {
       els.strategyCards.innerHTML = options.map(o => `
         <div class="card ${o.key === best.key ? 'active' : ''}">
-          <div class="card-top">
-            <strong>${o.title}</strong>
-            <span class="badge ${o.badgeClass || ''}">${o.badge}</span>
-          </div>
-          <div class="card-top" style="margin-bottom:0;">
-            <span style="color:#cfe3ff;font-size:13px;">評分：${o.score.toFixed(1)}</span>
-            <span style="color:#9fb2cc;font-size:12px;">${o.key === best.key ? '目前選用' : '備選'}</span>
-          </div>
+          <div class="card-top"><strong>${o.title}</strong><span class="badge ${o.badgeClass || ''}">${o.badge}</span></div>
+          <div class="card-top" style="margin-bottom:0;"><span style="color:#cfe3ff;font-size:13px;">評分：${o.score.toFixed(1)}</span><span style="color:#9fb2cc;font-size:12px;">${o.key === best.key ? '目前選用' : '備選'}</span></div>
           <p>${o.reason}</p>
         </div>
       `).join('');
@@ -839,13 +451,7 @@
     function updateRouteInfo(distance, best, weather, selectedTime, crowd, mode) {
       els.routeLength.textContent = `距離：${distance.toFixed(2)} km`;
       els.routeScore.textContent = `分數：${best.score.toFixed(1)}`;
-      els.explainBox.innerHTML = `
-        <strong>${best.title}</strong><br>
-        因為目前條件是 <strong>${weatherLabel(weather)}</strong>、<strong>${selectedTime}</strong>、
-        <strong>${crowdLabel(crowd)} 人流</strong>，系統目前偏向選擇 <strong>${modeLabel(mode)}</strong> 情境下的
-        <strong>${best.title}</strong> 路線。<br><br>
-        這版已經可以自由搜尋任意地點，之後再把天氣、交通壅塞與人流改成 TDX / 台北資料大平臺的 API，就能變成真正的即時決策系統。
-      `;
+      els.explainBox.innerHTML = `<strong>${best.title}</strong><br>因為目前條件是 <strong>${weatherLabel(weather)}</strong>、<strong>${selectedTime}</strong>、<strong>${crowdLabel(crowd)} 人流</strong>，系統目前偏向選擇 <strong>${modeLabel(mode)}</strong> 情境下的 <strong>${best.title}</strong> 路線。<br><br>AI 會負責判斷情境、產生策略說明；實際路線與地圖資料仍可接 TDX 與台北資料大平臺。`;
     }
 
     function drawRoute(a, b, weather, crowd, mode, best) {
@@ -853,42 +459,13 @@
       if (contextLayer) map.removeLayer(contextLayer);
       if (originMarker) map.removeLayer(originMarker);
       if (destinationMarker) map.removeLayer(destinationMarker);
-
       const via = midpointWithOffset(a, b, weather, crowd, mode);
       const color = best.key === 'comfort' ? '#34d399' : best.key === 'balanced' ? '#f59e0b' : '#60a5fa';
-      routeLayer = L.polyline([
-        [a.lat, a.lng],
-        [via.lat, via.lng],
-        [b.lat, b.lng]
-      ], {
-        color,
-        weight: 5,
-        opacity: 0.9,
-        lineCap: 'round'
-      }).addTo(map);
-
-      originMarker = L.circleMarker([a.lat, a.lng], {
-        radius: 9,
-        color: '#a7f3d0',
-        weight: 3,
-        fillColor: '#10b981',
-        fillOpacity: 0.95
-      }).addTo(map).bindPopup(`起點：${escapeHtml(a.name)}`);
-
-      destinationMarker = L.circleMarker([b.lat, b.lng], {
-        radius: 9,
-        color: '#bfdbfe',
-        weight: 3,
-        fillColor: '#3b82f6',
-        fillOpacity: 0.95
-      }).addTo(map).bindPopup(`終點：${escapeHtml(b.name)}`);
-
-      contextLayer = L.layerGroup([
-        L.marker([via.lat, via.lng]).bindPopup(`策略中繼點：${best.title}`)
-      ]).addTo(map);
-
-      const bounds = L.latLngBounds([[a.lat, a.lng], [b.lat, b.lng], [via.lat, via.lng]]);
-      map.fitBounds(bounds.pad(0.18));
+      routeLayer = L.polyline([[a.lat, a.lng], [via.lat, via.lng], [b.lat, b.lng]], { color, weight: 5, opacity: 0.9, lineCap: 'round' }).addTo(map);
+      originMarker = L.circleMarker([a.lat, a.lng], { radius: 9, color: '#a7f3d0', weight: 3, fillColor: '#10b981', fillOpacity: 0.95 }).addTo(map).bindPopup(`起點：${escapeHtml(a.name)}`);
+      destinationMarker = L.circleMarker([b.lat, b.lng], { radius: 9, color: '#bfdbfe', weight: 3, fillColor: '#3b82f6', fillOpacity: 0.95 }).addTo(map).bindPopup(`終點：${escapeHtml(b.name)}`);
+      contextLayer = L.layerGroup([L.marker([via.lat, via.lng]).bindPopup(`策略中繼點：${best.title}`)]).addTo(map);
+      map.fitBounds(L.latLngBounds([[a.lat, a.lng], [b.lat, b.lng], [via.lat, via.lng]]).pad(0.18));
     }
 
     async function nominatimSearch(query) {
@@ -900,12 +477,7 @@
       url.searchParams.set('bounded', '1');
       url.searchParams.set('limit', '6');
       url.searchParams.set('addressdetails', '1');
-
-      const res = await fetch(url.toString(), {
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
+      const res = await fetch(url.toString(), { headers: { 'Accept': 'application/json' } });
       if (!res.ok) throw new Error('地點搜尋失敗');
       return res.json();
     }
@@ -917,39 +489,20 @@
       url.searchParams.set('lon', lng);
       url.searchParams.set('zoom', '18');
       url.searchParams.set('addressdetails', '1');
-
-      const res = await fetch(url.toString(), {
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
+      const res = await fetch(url.toString(), { headers: { 'Accept': 'application/json' } });
       if (!res.ok) throw new Error('反查地址失敗');
       return res.json();
     }
 
     function renderSuggestions(field, items) {
       const box = field === 'origin' ? els.originSuggestions : els.destinationSuggestions;
-      if (!items.length) {
-        box.style.display = 'none';
-        box.innerHTML = '';
-        return;
-      }
+      if (!items.length) { box.style.display = 'none'; box.innerHTML = ''; return; }
       box.style.display = 'block';
-      box.innerHTML = items.map((item, idx) => `
-        <div class="suggestion" data-idx="${idx}">
-          <div class="name">${escapeHtml(item.display_name)}</div>
-          <div class="meta">${item.class || ''} ${item.type || ''} · ${Number(item.lat).toFixed(5)}, ${Number(item.lon).toFixed(5)}</div>
-        </div>
-      `).join('');
-
+      box.innerHTML = items.map((item, idx) => `<div class="suggestion" data-idx="${idx}"><div class="name">${escapeHtml(item.display_name)}</div><div class="meta">${item.class || ''} ${item.type || ''} · ${Number(item.lat).toFixed(5)}, ${Number(item.lon).toFixed(5)}</div></div>`).join('');
       [...box.querySelectorAll('.suggestion')].forEach(el => {
         el.addEventListener('click', () => {
           const item = items[Number(el.dataset.idx)];
-          selectPlace(field, {
-            name: item.display_name,
-            lat: Number(item.lat),
-            lng: Number(item.lon)
-          });
+          selectPlace(field, { name: item.display_name, lat: Number(item.lat), lng: Number(item.lon) });
           box.style.display = 'none';
         });
       });
@@ -958,200 +511,173 @@
     function updateSelectionText(field) {
       const target = field === 'origin' ? els.originSelection : els.destinationSelection;
       const data = field === 'origin' ? origin : destination;
-      if (!data) {
-        target.textContent = field === 'origin' ? '尚未選擇起點' : '尚未選擇終點';
-        return;
-      }
+      if (!data) { target.textContent = field === 'origin' ? '尚未選擇起點' : '尚未選擇終點'; return; }
       target.innerHTML = `<strong>${field === 'origin' ? '起點' : '終點'}：</strong>${escapeHtml(data.name)}<br><span style="color:#9fb2cc;">${data.lat.toFixed(6)}, ${data.lng.toFixed(6)}</span>`;
     }
 
     function selectPlace(field, place) {
-      if (field === 'origin') {
-        origin = place;
-        els.originQuery.value = place.name;
-      } else {
-        destination = place;
-        els.destinationQuery.value = place.name;
-      }
-      updateSelectionText(field);
-      setError('');
+      if (field === 'origin') { origin = place; els.originQuery.value = place.name; }
+      else { destination = place; els.destinationQuery.value = place.name; }
+      updateSelectionText(field); setError('');
     }
 
     async function doSearch(field, query) {
       const requestId = ++currentRequestId[field];
-      if (query.trim().length < 2) {
-        renderSuggestions(field, []);
-        return;
-      }
+      if (query.trim().length < 2) { renderSuggestions(field, []); return; }
       try {
         const results = await nominatimSearch(query.trim());
         if (requestId !== currentRequestId[field]) return;
-        renderSuggestions(field, results.map(r => ({
-          display_name: r.display_name,
-          lat: r.lat,
-          lon: r.lon,
-          class: r.class,
-          type: r.type
-        })));
+        renderSuggestions(field, results.map(r => ({ display_name: r.display_name, lat: r.lat, lon: r.lon, class: r.class, type: r.type })));
+      } catch { renderSuggestions(field, []); }
+    }
+
+    function hideSuggestions(field) { const box = field === 'origin' ? els.originSuggestions : els.destinationSuggestions; box.style.display = 'none'; }
+
+    async function callGemini(promptText) {
+      const apiKey = (els.apiKeyInput.value || localStorage.getItem(localKeyName) || '').trim();
+      if (!apiKey) throw new Error('請先輸入 Gemini API Key');
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(GEMINI_MODEL)}:generateContent`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': apiKey
+        },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: promptText }] }],
+          generationConfig: { temperature: 0.2, responseMimeType: 'application/json' }
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error?.message || 'Gemini 呼叫失敗');
+      const text = data?.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('') || '';
+      return text;
+    }
+
+    function buildDecisionPrompt(context, originPlace, destinationPlace, distance) {
+      return `
+你是一個智慧路徑決策引擎。請根據以下情境，輸出嚴格 JSON，不要輸出任何額外文字。
+
+情境：
+- 起點：${originPlace.name}
+- 終點：${destinationPlace.name}
+- 距離（公里）：${distance.toFixed(2)}
+- 時間：${context.now.label}
+- 時段：${context.selectedTime}
+- 天氣：${weatherLabel(context.weather)}
+- 人流：${crowdLabel(context.crowd)}
+- 移動模式：${modeLabel(els.mode.value)}
+
+請輸出格式：
+{
+  "strategy": "fast|balanced|comfort",
+  "reason": "中文簡短理由",
+  "score_notes": {
+    "distance_weight": number,
+    "weather_weight": number,
+    "crowd_weight": number,
+    "time_weight": number
+  },
+  "summary": "一段 1~2 句中文解釋"
+}
+
+規則：
+- 必須依據情境調整策略。
+- 如果下雨或低能見度，偏向 comfort 或 balanced。
+- 如果人流高，偏向避開擁擠。
+- 回傳必須是可被 JSON.parse 解析的純 JSON。
+      `.trim();
+    }
+
+    async function testGemini() {
+      try {
+        const sample = await callGemini('請只輸出 JSON：{"ok":true,"message":"Gemini 連線成功"}');
+        try {
+          const parsed = JSON.parse(sample);
+          setError(`Gemini 測試成功：${parsed.message || 'OK'}`);
+        } catch {
+          setError(`Gemini 已回應，但不是純 JSON：${sample.slice(0, 120)}`);
+        }
       } catch (err) {
-        renderSuggestions(field, []);
+        setError(`Gemini 測試失敗：${err.message}`);
       }
     }
 
-    function hideSuggestions(field) {
-      const box = field === 'origin' ? els.originSuggestions : els.destinationSuggestions;
-      box.style.display = 'none';
-    }
-
-    function getContext() {
-      const now = getNowParts();
-      const selectedTime = els.timeBias.value === 'auto' ? timeBand(now.hour) : els.timeBias.value;
-      const weather = els.weather.value === 'auto' ? autoWeatherByTime(now.hour) : els.weather.value;
-      const crowd = Number(els.crowd.value);
-      return { now, selectedTime, weather, crowd };
-    }
-
-    function calculateAndDraw() {
+    async function calculateAndDraw() {
       updateSummary();
+      if (!origin || !destination) { setError('請先透過搜尋或點地圖選好起點與終點。'); return; }
       const context = getContext();
+      const distance = distanceKm(origin, destination);
+      const fallbackStrategies = scoreStrategies(distance, context.weather, context.crowd, els.mode.value, context.selectedTime);
+      let best = selectBestStrategy(fallbackStrategies, context.weather, context.crowd, context.selectedTime, els.mode.value);
 
-      if (!origin || !destination) {
-        setError('請先透過搜尋或點地圖選好起點與終點。');
-        return;
+      try {
+        const prompt = buildDecisionPrompt(context, origin, destination, distance);
+        const raw = await callGemini(prompt);
+        const parsed = JSON.parse(raw);
+        if (parsed?.strategy) {
+          const hit = fallbackStrategies.find(s => s.key === parsed.strategy);
+          if (hit) best = hit;
+          els.explainBox.innerHTML = `<strong>Gemini 判斷</strong><br>${escapeHtml(parsed.summary || parsed.reason || 'Gemini 已完成判斷。')}<br><br><span style="color:#9fb2cc;">權重參考：distance=${parsed?.score_notes?.distance_weight ?? '-'}，weather=${parsed?.score_notes?.weather_weight ?? '-'}，crowd=${parsed?.score_notes?.crowd_weight ?? '-'}，time=${parsed?.score_notes?.time_weight ?? '-'}</span>`;
+        }
+      } catch (err) {
+        els.explainBox.innerHTML = `<strong>Gemini 未成功回應</strong><br>${escapeHtml(err.message)}<br><br>系統已改用本地規則模型展示。`;
       }
 
-      const distance = distanceKm(origin, destination);
-      const strategies = scoreStrategies(distance, context.weather, context.crowd, els.mode.value, context.selectedTime);
-      const best = selectBestStrategy(strategies, context.weather, context.crowd, context.selectedTime, els.mode.value);
-
-      renderStrategyCards(strategies, best);
+      renderStrategyCards(fallbackStrategies, best);
       drawRoute(origin, destination, context.weather, context.crowd, els.mode.value, best);
       updateRouteInfo(distance, best, context.weather, context.selectedTime, context.crowd, els.mode.value);
     }
 
     async function setFromMapClick(latlng) {
-      const placeName = await (async () => {
-        try {
-          const data = await nominatimReverse(latlng.lat, latlng.lng);
-          return data.display_name || '地圖點位';
-        } catch {
-          return '地圖點位';
-        }
-      })();
-
-      const place = {
-        name: placeName,
-        lat: latlng.lat,
-        lng: latlng.lng
-      };
-      selectPlace(activePick, place);
+      const placeName = await (async () => { try { const data = await nominatimReverse(latlng.lat, latlng.lng); return data.display_name || '地圖點位'; } catch { return '地圖點位'; } })();
+      selectPlace(activePick, { name: placeName, lat: latlng.lat, lng: latlng.lng });
       calculateAndDraw();
     }
 
-    els.originQuery.addEventListener('input', () => {
-      clearTimeout(debounceTimers.origin);
-      debounceTimers.origin = setTimeout(() => doSearch('origin', els.originQuery.value), 280);
+    els.apiKeyInput.addEventListener('change', () => {
+      const v = els.apiKeyInput.value.trim();
+      if (v) localStorage.setItem(localKeyName, v);
     });
-
-    els.destinationQuery.addEventListener('input', () => {
-      clearTimeout(debounceTimers.destination);
-      debounceTimers.destination = setTimeout(() => doSearch('destination', els.destinationQuery.value), 280);
+    els.saveKeyBtn.addEventListener('click', () => {
+      const v = els.apiKeyInput.value.trim();
+      if (!v) return setError('請先貼上 API Key。');
+      localStorage.setItem(localKeyName, v);
+      setError('API Key 已儲存到本機瀏覽器。');
     });
-
-    els.originQuery.addEventListener('focus', () => {
-      activePick = 'origin';
-      els.pickOriginBtn.classList.add('selected');
-      els.pickDestinationBtn.classList.remove('selected');
-      if (els.originSuggestions.innerHTML.trim()) els.originSuggestions.style.display = 'block';
+    els.clearKeyBtn.addEventListener('click', () => {
+      localStorage.removeItem(localKeyName);
+      els.apiKeyInput.value = '';
+      setError('API Key 已清除。');
     });
-
-    els.destinationQuery.addEventListener('focus', () => {
-      activePick = 'destination';
-      els.pickDestinationBtn.classList.add('selected');
-      els.pickOriginBtn.classList.remove('selected');
-      if (els.destinationSuggestions.innerHTML.trim()) els.destinationSuggestions.style.display = 'block';
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.search-wrap')) {
-        hideSuggestions('origin');
-        hideSuggestions('destination');
-      }
-    });
-
-    els.pickOriginBtn.addEventListener('click', () => {
-      activePick = 'origin';
-      els.pickOriginBtn.classList.add('selected');
-      els.pickDestinationBtn.classList.remove('selected');
-    });
-
-    els.pickDestinationBtn.addEventListener('click', () => {
-      activePick = 'destination';
-      els.pickDestinationBtn.classList.add('selected');
-      els.pickOriginBtn.classList.remove('selected');
-    });
-
+    els.testGeminiBtn.addEventListener('click', testGemini);
+    els.originQuery.addEventListener('input', () => { clearTimeout(debounceTimers.origin); debounceTimers.origin = setTimeout(() => doSearch('origin', els.originQuery.value), 280); });
+    els.destinationQuery.addEventListener('input', () => { clearTimeout(debounceTimers.destination); debounceTimers.destination = setTimeout(() => doSearch('destination', els.destinationQuery.value), 280); });
+    els.originQuery.addEventListener('focus', () => { activePick = 'origin'; els.pickOriginBtn.classList.add('selected'); els.pickDestinationBtn.classList.remove('selected'); if (els.originSuggestions.innerHTML.trim()) els.originSuggestions.style.display = 'block'; });
+    els.destinationQuery.addEventListener('focus', () => { activePick = 'destination'; els.pickDestinationBtn.classList.add('selected'); els.pickOriginBtn.classList.remove('selected'); if (els.destinationSuggestions.innerHTML.trim()) els.destinationSuggestions.style.display = 'block'; });
+    document.addEventListener('click', (e) => { if (!e.target.closest('.search-wrap')) { hideSuggestions('origin'); hideSuggestions('destination'); } });
+    els.pickOriginBtn.addEventListener('click', () => { activePick = 'origin'; els.pickOriginBtn.classList.add('selected'); els.pickDestinationBtn.classList.remove('selected'); });
+    els.pickDestinationBtn.addEventListener('click', () => { activePick = 'destination'; els.pickDestinationBtn.classList.add('selected'); els.pickOriginBtn.classList.remove('selected'); });
     els.clearBtn.addEventListener('click', () => {
-      origin = null;
-      destination = null;
-      els.originQuery.value = '';
-      els.destinationQuery.value = '';
-      els.originSelection.textContent = '尚未選擇起點';
-      els.destinationSelection.textContent = '尚未選擇終點';
-      els.strategyCards.innerHTML = '';
-      els.explainBox.textContent = '選好起點與終點後，這裡會顯示策略理由。';
-      els.routeLength.textContent = '距離：-- km';
-      els.routeScore.textContent = '分數：--';
-      setError('');
-      if (routeLayer) map.removeLayer(routeLayer);
-      if (contextLayer) map.removeLayer(contextLayer);
-      if (originMarker) map.removeLayer(originMarker);
-      if (destinationMarker) map.removeLayer(destinationMarker);
+      origin = null; destination = null; els.originQuery.value = ''; els.destinationQuery.value = ''; els.originSelection.textContent = '尚未選擇起點'; els.destinationSelection.textContent = '尚未選擇終點';
+      els.strategyCards.innerHTML = ''; els.explainBox.textContent = '選好起點與終點後，這裡會顯示策略理由。'; els.routeLength.textContent = '距離：-- km'; els.routeScore.textContent = '分數：--'; setError('');
+      if (routeLayer) map.removeLayer(routeLayer); if (contextLayer) map.removeLayer(contextLayer); if (originMarker) map.removeLayer(originMarker); if (destinationMarker) map.removeLayer(destinationMarker);
     });
-
     els.runBtn.addEventListener('click', calculateAndDraw);
-    els.resetBtn.addEventListener('click', () => {
-      els.weather.value = 'auto';
-      els.mode.value = 'walk';
-      els.crowd.value = 58;
-      els.timeBias.value = 'auto';
-      els.clearBtn.click();
-      updateSummary();
-    });
-
-    [els.weather, els.mode, els.crowd, els.timeBias].forEach(el => {
-      el.addEventListener('input', updateSummary);
-      el.addEventListener('change', updateSummary);
-    });
-
-    map.on('click', (e) => {
-      setFromMapClick(e.latlng);
-    });
-
+    els.resetBtn.addEventListener('click', () => { els.weather.value = 'auto'; els.mode.value = 'walk'; els.crowd.value = 58; els.timeBias.value = 'auto'; els.clearBtn.click(); updateSummary(); });
+    [els.weather, els.mode, els.crowd, els.timeBias].forEach(el => { el.addEventListener('input', updateSummary); el.addEventListener('change', updateSummary); });
+    map.on('click', (e) => setFromMapClick(e.latlng));
     updateSummary();
-    setInterval(() => {
-      if (els.weather.value === 'auto' || els.timeBias.value === 'auto') updateSummary();
-    }, 30000);
+    setInterval(() => { if (els.weather.value === 'auto' || els.timeBias.value === 'auto') updateSummary(); }, 30000);
 
-    // 預設示範兩個常見地點，方便你一打開就能展示
     (async () => {
       try {
         const start = await nominatimSearch('台北車站');
-        if (start[0]) selectPlace('origin', {
-          name: start[0].display_name,
-          lat: Number(start[0].lat),
-          lng: Number(start[0].lon)
-        });
+        if (start[0]) selectPlace('origin', { name: start[0].display_name, lat: Number(start[0].lat), lng: Number(start[0].lon) });
         const end = await nominatimSearch('台北101');
-        if (end[0]) selectPlace('destination', {
-          name: end[0].display_name,
-          lat: Number(end[0].lat),
-          lng: Number(end[0].lon)
-        });
+        if (end[0]) selectPlace('destination', { name: end[0].display_name, lat: Number(end[0].lat), lng: Number(end[0].lon) });
         calculateAndDraw();
-      } catch {
-        // ignore
-      }
+      } catch {}
     })();
   </script>
 </body>
